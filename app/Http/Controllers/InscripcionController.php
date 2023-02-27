@@ -29,11 +29,11 @@ class InscripcionController extends Controller
      */
     public function createInscripcion()
     { 
-    //Traigo todas las Profeciones activas para que usuario lo pueda selecionar
-        $profeciones = profecion::where('estado','activo')
+    //Traigo todas las Profesiones activas para que usuario lo pueda selecionar
+        $profesiones = profesion::where('estado','activo')
                                 ->get();
         return view('inscripcion.create')
-                  ->with('profeciones', $profeciones);
+                  ->with('profesiones', $profesiones);
     }
 
     /**
@@ -64,6 +64,47 @@ class InscripcionController extends Controller
             //profesion
             'idProfesion'          => 'integer',
         ]);
+
+        $profesion = Profesion::find($request->idProfesion);
+
+        if($profesion->isEmpty()){
+            return redirect(url()->previuos());
+        }
+
+        $alumno = Alumno::Where('dni',$request->dni)
+                        ->get();
+
+        if($alumno->isEmpty()){
+            $alumno = new Alumno();
+        }else{
+            if($alumno->estado == 'inactivo'){
+                return redirect(url()->previuos());
+            }
+            else{
+                //para que no me quede en forma de arreglo
+                $alumno = Alumno::find($alumno->id);
+            }
+        } 
+    //incersion de datos y guardado de alumno 
+        $alumno->dni             = $request->dni;
+        $alumno->nombre          = $request->nombre;
+        $alumno->apellido        = $request->apellido;
+        $alumno->numeroCalle     = $request->numeroCalle;
+        $alumno->calle           = $request->calle;
+        $alumno->fechaNacimiento = $request->fechaNacimiento;
+        $alumno->estado          = "activo";
+        $alumno->tipo            = "alumno";
+        $alumno->save();
+
+    //incersion de datos y guardado de inscripcion
+        $inscripcion                       = new Inscripcion();
+        $inscripcion->matriculo            = $request->matricula;
+        $inscripcion->modalidad            = $request->modalidad;
+        $inscripcion->descripcionAdicional = $request->descripcionAdicional;
+        $inscripcion->estado               = 'activo';
+    
+
+
 
     }
 
