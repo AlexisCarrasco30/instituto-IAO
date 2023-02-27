@@ -23,6 +23,21 @@ class InscripcionController extends Controller
     }
 
     /**
+     * Listado de incripciones ordenadas por creacion o actualizacion
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function IncripcionesUltimas()
+    {
+        $incripciones = Incripcion::where('estado','activo')
+                                  ->orderBy('updated_at','Desc')
+                                  ->get();
+    
+        return view('inscripcion.inscripciones')
+                  ->with('inscripciones', $inscripciones);
+    }
+
+    /**
      * Realizar una inscripcion
      *
      * @return \Illuminate\Http\Response
@@ -65,6 +80,7 @@ class InscripcionController extends Controller
             'idProfesion'          => 'integer',
         ]);
 
+    //Control de que se ha seleccionado una profesion
         $profesion = Profesion::find($request->idProfesion);
 
         if($profesion->isEmpty()){
@@ -104,53 +120,108 @@ class InscripcionController extends Controller
         $inscripcion->estado               = 'activo';
         $inscripcion->idAlumno             = $alumno->id;
         $inscripcion->idProfesion          = $profesion->id;
+        $inscripcion->save();
 
-
-
+        return redirect('/Inscripciones/Ultimas');
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Edicion de una incripcion.
+     * @param  int  $id
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function show(Inscripcion $inscripcion)
+    public function editInscripcion(Inscripcion $inscripcion,$id)
     {
-        //
+        //Control de que exita la inscripcion activa
+        $inscripcion = Inscripcion::where('id',$id)
+                                  ->where('estado','activo')
+                                  ->get();
+        //traigo todas las profeciones para el select
+        $profesiones = profesion::where('estado','activo')
+                                ->get();                        
+        
+        return view('inscripcion.edit')
+                  ->with('inscripcion', $inscripcion)
+                  ->with('profesiones', $profesiones);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Inscripcion  $inscripcion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Inscripcion $inscripcion)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
+     * Actualizacion de inscripcion.
+     * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Inscripcion $inscripcion)
+    public function updateInscripcion(Request $request, $id)
     {
-        //
+      //Control de inputs
+      $request->validate([
+        //instituto
+        'fecha'                => 'required|date',
+        'matricula'            => 'required|string',
+        'modalidad'            => 'required|string',
+        'descripcionAdicional' => 'required|string',
+        //alumno
+        'nombre'               => 'required|string',
+        'apellido'             => 'required|string',
+        'dni'                  => 'required|integer|max:100000000|min:1000000',
+        'fechaNacimiento'      => 'date',
+        'calle'                => 'required|string|max:256| min:4',
+        'numeroCalle'          => 'required|integer|min:1|max:9999',
+        'codigoArea'           => 'required|numeric|max:9999|min:99',
+        'numero'               => 'required|numeric|max:9999999|min:999999', 
+        'whatsapp'             => 'required|boolean',
+        //profesion
+        'idProfesion'          => 'integer',
+        ]);
+
+    //control de que se ha selecionado una profesion   
+        $profesion = Profesion::find($request->idProfesion);
+
+        if($profesion->isEmpty()){
+            return redirect(url()->previuos());
+        }
+
+        $alumno = Alumno::Where('dni',$request->dni)
+                        ->get();
+
+        if($alumno->isEmpty()){
+            return redirect(url()->previuos());
+        }else{
+            if($alumno->estado == 'inactivo'){
+                return redirect(url()->previuos());
+            }
+            else{
+                //para que no me quede en forma de arreglo
+                $alumno = Alumno::find($alumno->id);
+            }
+        } 
+    //incersion de datos y guardado de inscripcion
+        $inscripcion                       = incripcion::find($id);
+        $inscripcion->matriculo            = $request->matricula;
+        $inscripcion->modalidad            = $request->modalidad;
+        $inscripcion->descripcionAdicional = $request->descripcionAdicional;
+        $inscripcion->estado               = 'activo';
+        $inscripcion->idAlumno             = $alumno->id;
+        $inscripcion->idProfesion          = $profesion->id;
+        $inscripcion->save();
+
+        return redirect('/Inscripciones/Ultimas');
+
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Baja de una materia..
+     * @param  int  $id
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inscripcion $inscripcion)
+    public function destroyincripcion(Inscripcion $inscripcion , $id)
     {
-        //
+        $inscripcion = inscripcion::find($id);
+        $inscripcion->delete();
+
+        return redirect('/Inscripciones/TodasIncripciones');
     }
 }

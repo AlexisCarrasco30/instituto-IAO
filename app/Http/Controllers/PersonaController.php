@@ -18,9 +18,15 @@ class PersonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function AlumnosActivos()
-    {
+    { 
+
+        $tutores = Persona::join('tutores','tutores.idTutor','=','personas.id')
+                            ->select('persona.*','tutores.idAlumno as alumno')
+                            ->get();
+
         $alumnos = Persona::where('tipo','alumno')
                           ->where('estado','activo')
+                          ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
                           ->orderBy('apellido','Asc')
                           ->get();
 

@@ -9,4 +9,5 @@ class Tutor extends Model
 {
     use HasFactory;
     protected $table = ['tutores'];
+
 }
