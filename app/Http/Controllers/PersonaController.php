@@ -20,13 +20,17 @@ class PersonaController extends Controller
     public function AlumnosActivos()
     { 
 
-        $tutores = Persona::join('tutores','tutores.idTutor','=','personas.id')
-                            ->select('persona.*','tutores.idAlumno as alumno')
-                            ->get();
+        $subTutores = Persona::where('estado','activo')
+                          ->join('tutores','tutores.idTutor','=','personas.id')
+                          ->select('persona.*','tutores.idAlumno as alumno')
+                          ->get();
 
         $alumnos = Persona::where('tipo','alumno')
                           ->where('estado','activo')
                           ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
+                          ->joinSub($subtutores, 'subTutores', function (JoinClause $join) {
+                                $join->on('tutores.idTutor', '=', '$subTutores.alumno');})
+                          ->select('personas.*','subTutores.id AS idTutor','subTutores.dni AS dniTutor','subTutores.nombre AS nombreTutor','subTutores.apellido AS apellidoTutor')
                           ->orderBy('apellido','Asc')
                           ->get();
 
@@ -41,10 +45,19 @@ class PersonaController extends Controller
      */
     public function AlumnosInactivos()
     {
-        $alumnos = Persona::where('tipo','alumno')
-                          ->where('estado','activo')
-                          ->orderBy('apellido','Asc')
-                          ->get();
+        $subTutores = Persona::where('estado','activo')
+                             ->join('tutores','tutores.idTutor','=','personas.id')
+                             ->select('persona.*','tutores.idAlumno as alumno')
+                             ->get();
+
+        $alumnos    = Persona::where('tipo','inactivo')
+                             ->where('estado','activo')
+                             ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
+                             ->joinSub($subtutores, 'subTutores', function (JoinClause $join) {
+                                  $join->on('tutores.idTutor', '=', '$subTutores.alumno');})
+                             ->select('personas.*','subTutores.id AS idTutor','subTutores.dni AS dniTutor','subTutores.nombre AS nombreTutor','subTutores.apellido AS apellidoTutor')
+                             ->orderBy('apellido','Asc')
+                             ->get();
 
         return view ('alumno.inactivos')
                   ->with('alumnos',$alumnos); 
