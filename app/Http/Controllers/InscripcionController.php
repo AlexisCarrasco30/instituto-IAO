@@ -102,7 +102,8 @@ class InscripcionController extends Controller
         $inscripcion->modalidad            = $request->modalidad;
         $inscripcion->descripcionAdicional = $request->descripcionAdicional;
         $inscripcion->estado               = 'activo';
-    
+        $inscripcion->idAlumno             = $alumno->id;
+        $inscripcion->idProfesion          = $profesion->id;
 
 
 
