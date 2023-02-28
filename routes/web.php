@@ -25,15 +25,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Auth::routes();
 
 //Rutas "Alumno" controlador "PersonaController"
-    Route::post('/Store/Alumno',        [App\Http\Controllers\PersonaController::class, 'StoreAlumno']);
-    Route::post('/Update/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'UpdateAlumno']);
-    Route::get ('/Alumnos/Activos',     [App\Http\Controllers\PersonaController::class, 'AlumnosActivos']);
-    Route::get ('/Alumnos/Inactivos',   [App\Http\Controllers\PersonaController::class, 'AlumnosInactivos']);
-    Route::get ('/Alumnos/Ultimos',     [App\Http\Controllers\PersonaController::class, 'AlumnosUltimos']);
-    Route::get ('/Create/Alumno',       [App\Http\Controllers\PersonaController::class, 'CreateAlumno']);
-    Route::get ('/Edit/Alumno/{id}',    [App\Http\Controllers\PersonaController::class, 'EditAlumno']);
-    Route::get ('/Baja/Alumno/{id}',    [App\Http\Controllers\PersonaController::class, 'bajaAlumno']);
-    Route::get ('/Activar/Alumno/{id}', [App\Http\Controllers\PersonaController::class, 'ActivarAlumno']);
+    Route::post('/Store/Alumno',         [App\Http\Controllers\PersonaController::class, 'StoreAlumno']);
+    Route::post('/Update/Alumno/{id}',   [App\Http\Controllers\PersonaController::class, 'UpdateAlumno']);
+    Route::get ('/Alumnos/Activos',      [App\Http\Controllers\PersonaController::class, 'AlumnosActivos']);
+    Route::get ('/Alumnos/Inactivos',    [App\Http\Controllers\PersonaController::class, 'AlumnosInactivos']);
+    Route::get ('/Alumnos/Corporativos', [App\Http\Controllers\PersonaController::class, 'AlumnosCorporativos']);
+    Route::get ('/Alumnos/Secundaria',   [App\Http\Controllers\PersonaController::class, 'AlumnosSecundaria']);
+    Route::get ('/Alumnos/Cursos',       [App\Http\Controllers\PersonaController::class, 'AlumnosCursos']);
+    Route::get ('/Alumnos/Ultimos',      [App\Http\Controllers\PersonaController::class, 'AlumnosUltimos']);
+    Route::get ('/Create/Alumno',        [App\Http\Controllers\PersonaController::class, 'CreateAlumno']);
+    Route::get ('/Edit/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'EditAlumno']);
+    Route::get ('/Baja/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'bajaAlumno']);
+    Route::get ('/Activar/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'ActivarAlumno']);
+    
     
    //Rutas "Persona"   
     Route::post('/Buscar/Dni',          [App\Http\Controllers\PersonaController::class, 'buscarDni']);

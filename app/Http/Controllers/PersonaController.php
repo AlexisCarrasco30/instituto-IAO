@@ -38,6 +38,68 @@ class PersonaController extends Controller
                   ->with('alumnos',$alumnos); 
     }
 //------------------------------------------------------------------------
+/**
+     * Se trae todos los alumnos corporativos que esten activos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function AlumnosCorporativos()
+    {
+        $alumnos    = Persona::where('tipo','alumno')
+                             ->where('estado','activo')
+                                ->join('incripciones','incripciones.idAlumno','=','alumnos.id')
+                                ->join('profesiones','profesiones.tipo','=','incripciones.idProfesion')
+                             ->where('profesiones.tipo','=','corporativo')
+                             ->orderBy('apellido','Asc')
+                             ->get();
+
+        return view ('alumno.activos')
+                  ->with('alumnos',$alumnos)
+                  ->with('tipoalumno',$tipoalumno);  
+
+    }
+//------------------------------------------------------------------------
+/**
+     * Se trae todos los alumnos secundaria que esten activos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function AlumnosSecundaria()
+    {
+        $tipoalumno = 'secundaria';
+        $alumnos    = Persona::where('tipo','alumno')
+                             ->where('estado','activo')
+                                ->join('incripciones','incripciones.idAlumno','=','alumnos.id')
+                                ->join('profesiones','profesiones.tipo','=','incripciones.idProfesion')
+                             ->where('profesiones.tipo','=','secundaria')
+                             ->orderBy('apellido','Asc')
+                             ->get();
+
+        return view ('alumno.activos')
+                  ->with('alumnos',$alumnos)
+                  ->with('tipoalumno',$tipoalumno); 
+    }
+//------------------------------------------------------------------------
+/**
+     * Se trae todos los alumnos cursos que esten activos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function AlumnosCursos()
+    {
+        $alumnos    = Persona::where('tipo','alumno')
+                             ->where('estado','activo')
+                                ->join('incripciones','incripciones.idAlumno','=','alumnos.id')
+                                ->join('profesiones','profesiones.tipo','=','incripciones.idProfesion')
+                             ->where('profesiones.tipo','=','cursos')
+                             ->orderBy('apellido','Asc')
+                             ->get();
+                             
+        return view ('alumno.activos')
+                  ->with('alumnos',$alumnos)
+                  ->with('tipoalumno',$tipoalumno); 
+    }
+//------------------------------------------------------------------------
     /**
      * se trae todos los alumnos que estan inactivos.
      *
@@ -50,8 +112,8 @@ class PersonaController extends Controller
                              ->select('persona.*','tutores.idAlumno as alumno')
                              ->get();
 
-        $alumnos    = Persona::where('tipo','inactivo')
-                             ->where('estado','activo')
+        $alumnos    = Persona::where('tipo','alumno')
+                             ->where('estado','inactivo')
                              ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
                              ->joinSub($subtutores, 'subTutores', function (JoinClause $join) {
                                   $join->on('tutores.idTutor', '=', '$subTutores.alumno');})

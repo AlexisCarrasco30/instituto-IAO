@@ -7,9 +7,9 @@
     <!-- Cabecera        -->
         <thead>
             <tr>    
-                <th scope="col">Nombre</th>
+                <th scope="col">Nombre  </th>
                 <th scope="col">Apellido</th>
-                <th scope="col">Dni</th>
+                <th scope="col">Dni     </th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
