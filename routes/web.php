@@ -25,54 +25,71 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Auth::routes();
 
 //Rutas "Alumno" controlador "PersonaController"
-    Route::post('/Store/Alumno',         [App\Http\Controllers\PersonaController::class, 'StoreAlumno']);
-    Route::post('/Update/Alumno/{id}',   [App\Http\Controllers\PersonaController::class, 'UpdateAlumno']);
-    Route::get ('/Alumnos/Activos',      [App\Http\Controllers\PersonaController::class, 'AlumnosActivos']);
-    Route::get ('/Alumnos/Inactivos',    [App\Http\Controllers\PersonaController::class, 'AlumnosInactivos']);
+    Route::post('/Store/Alumno',         [App\Http\Controllers\PersonaController::class, 'StoreAlumno'        ]);
+    Route::post('/Update/Alumno/{id}',   [App\Http\Controllers\PersonaController::class, 'UpdateAlumno'       ]);
+    Route::get ('/Alumnos/Activos',      [App\Http\Controllers\PersonaController::class, 'AlumnosActivos'     ]);
+    Route::get ('/Alumnos/Inactivos',    [App\Http\Controllers\PersonaController::class, 'AlumnosInactivos'   ]);
     Route::get ('/Alumnos/Corporativos', [App\Http\Controllers\PersonaController::class, 'AlumnosCorporativos']);
-    Route::get ('/Alumnos/Secundaria',   [App\Http\Controllers\PersonaController::class, 'AlumnosSecundaria']);
-    Route::get ('/Alumnos/Cursos',       [App\Http\Controllers\PersonaController::class, 'AlumnosCursos']);
-    Route::get ('/Alumnos/Ultimos',      [App\Http\Controllers\PersonaController::class, 'AlumnosUltimos']);
-    Route::get ('/Create/Alumno',        [App\Http\Controllers\PersonaController::class, 'CreateAlumno']);
-    Route::get ('/Edit/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'EditAlumno']);
-    Route::get ('/Baja/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'bajaAlumno']);
-    Route::get ('/Activar/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'ActivarAlumno']);
+    Route::get ('/Alumnos/Secundaria',   [App\Http\Controllers\PersonaController::class, 'AlumnosSecundaria'  ]);
+    Route::get ('/Alumnos/Cursos',       [App\Http\Controllers\PersonaController::class, 'AlumnosCursos'      ]);
+    Route::get ('/Alumnos/Ultimos',      [App\Http\Controllers\PersonaController::class, 'AlumnosUltimos'     ]);
+    Route::get ('/Create/Alumno',        [App\Http\Controllers\PersonaController::class, 'CreateAlumno'       ]);
+    Route::get ('/Edit/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'EditAlumno'         ]);
+    Route::get ('/Baja/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'bajaAlumno'         ]);
+    Route::get ('/Activar/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'ActivarAlumno'      ]);
     
     
    //Rutas "Persona"   
     Route::post('/Buscar/Dni',          [App\Http\Controllers\PersonaController::class, 'buscarDni']);
 
 //Rutas "Telefono" controlador "TelefonoController"
-    Route::post('/Store/Telefono/{id}',  [App\Http\Controllers\TelefonoController::class, 'StoreTelefono']);
+    Route::post('/Store/Telefono/{id}',  [App\Http\Controllers\TelefonoController::class, 'StoreTelefono' ]);
     Route::post('/Update/Telefono/{id}', [App\Http\Controllers\TelefonoController::class, 'UpdateTelefono']);
-    Route::get ('/Telefonos',            [App\Http\Controllers\TelefonoController::class, 'Telefonos']);
-    Route::get ('/Sus/Telefonos/{id}',   [App\Http\Controllers\TelefonoController::class, 'SusTelefonos']);
-    Route::get ('/Edit/Telefono/{id}',   [App\Http\Controllers\TelefonoController::class, 'EditTelefono']);
+    Route::get ('/Telefonos',            [App\Http\Controllers\TelefonoController::class, 'Telefonos'     ]);
+    Route::get ('/Sus/Telefonos/{id}',   [App\Http\Controllers\TelefonoController::class, 'SusTelefonos'  ]);
+    Route::get ('/Edit/Telefono/{id}',   [App\Http\Controllers\TelefonoController::class, 'EditTelefono'  ]);
     Route::get ('/Create/Telefono',      [App\Http\Controllers\TelefonoController::class, 'CreateTelefono']);
-    Route::get ('/Baja/Telefono/{id}',   [App\Http\Controllers\TelefonoController::class, 'BajaTelefono']);
+    Route::get ('/Baja/Telefono/{id}',   [App\Http\Controllers\TelefonoController::class, 'BajaTelefono'  ]);
 
 //Rutas "Profesion" controlador "ProfesionController"   
-    Route::post('/Store/Profesion/{id}',   [App\Http\Controllers\ProfecionController::class, 'StoreProfesion']);
-    Route::post('/Update/Profesion/{id}',  [App\Http\Controllers\ProfecionController::class, 'UpdateProfesion']);
-    Route::get ('/Profesiones/Activas',    [App\Http\Controllers\ProfecionController::class, 'ProfesionesActivas']);
-    Route::get ('/Profesiones/Inactivas',  [App\Http\Controllers\ProfecionController::class, 'ProfesionesInactivas']);
-    Route::get ('/Profesiones/Ultimas',    [App\Http\Controllers\ProfecionController::class, 'ProfesionesUltimas']);
+    Route::post('/Store/Profesion/{id}',   [App\Http\Controllers\ProfecionController::class, 'StoreProfesion'       ]);
+    Route::post('/Update/Profesion/{id}',  [App\Http\Controllers\ProfecionController::class, 'UpdateProfesion'      ]);
+    Route::get ('/Profesiones/Activas',    [App\Http\Controllers\ProfecionController::class, 'ProfesionesActivas'   ]);
+    Route::get ('/Profesiones/Inactivas',  [App\Http\Controllers\ProfecionController::class, 'ProfesionesInactivas' ]);
+    Route::get ('/Profesiones/Ultimas',    [App\Http\Controllers\ProfecionController::class, 'ProfesionesUltimas'   ]);
     Route::get ('/Profesiones/Historicas', [App\Http\Controllers\ProfecionController::class, 'ProfesionesHistoricas']);
-    Route::get ('/Edit/Profesion/{id}',    [App\Http\Controllers\ProfecionController::class, 'EditProfesion']);
-    Route::get ('/Create/Profesion',       [App\Http\Controllers\ProfecionController::class, 'CreateProfesion']);
-    Route::get ('/Baja/Profesion/{id}',    [App\Http\Controllers\ProfecionController::class, 'BajaProfesion']);
+    Route::get ('/Edit/Profesion/{id}',    [App\Http\Controllers\ProfecionController::class, 'EditProfesion'        ]);
+    Route::get ('/Create/Profesion',       [App\Http\Controllers\ProfecionController::class, 'CreateProfesion'      ]);
+    Route::get ('/Baja/Profesion/{id}',    [App\Http\Controllers\ProfecionController::class, 'BajaProfesion'        ]);
 
 //Rutas "Materia" controlador "MateriaController"    
-    Route::post('/Store/Materia/{id}',   [App\Http\Controllers\MateriaController::class, 'StoreMateria']);
-    Route::post('/Update/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'UpdateMateria']);
-    Route::get ('/Materias/{id}',        [App\Http\Controllers\MateriaController::class, 'Materias']);
+    Route::post('/Store/Materia/{id}',   [App\Http\Controllers\MateriaController::class, 'StoreMateria'   ]);
+    Route::post('/Update/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'UpdateMateria'  ]);
+    Route::get ('/Materias/{id}',        [App\Http\Controllers\MateriaController::class, 'Materias'       ]);
     Route::get ('/Materias/Ultimas{id}', [App\Http\Controllers\MateriaController::class, 'MateriasUltimas']);
-    Route::get ('/Edit/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'EditMateria']);
-    Route::get ('/Create/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'CreateMateria']);
-    Route::get ('/Baja/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'BajaMateria']);
+    Route::get ('/Edit/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'EditMateria'    ]);
+    Route::get ('/Create/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'CreateMateria'  ]);
+    Route::get ('/Baja/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'BajaMateria'    ]);
 
 //Rutas "Inscripcion" controlador "InscripcionController"
-        
+    Route::post('/Store/Inscripcion',     [App\Http\Controllers\InscripcionController::class, 'StoreInscripcion'   ]);
+    Route::post('/UpdateInscripcion/{id}',[App\Http\Controllers\InscripcionController::class, 'UpdateInscripcion'  ]);
+    Route::get ('/Inscripciones',         [App\Http\Controllers\InscripcionController::class, 'Incripciones'       ]);
+    Route::get ('/Incripciones/Ultimas',  [App\Http\Controllers\InscripcionController::class, 'IncripcionesUltimas']);
+    Route::get ('/Create/Inscripcion',    [App\Http\Controllers\InscripcionController::class, 'CreateInscripcion'  ]);
+    Route::get ('/Edit/Inscripcion/{id}', [App\Http\Controllers\InscripcionController::class, 'EditInscripcion'    ]);
+    Route::get ('/Baja/Incripcion/{id}',  [App\Http\Controllers\InscripcionController::class, 'BajaIncripcion'     ]);
+
+//Rutas "Pago" controlador "PagoController"
+    Route::get ('/Pagos',   [App\Http\Controllers\InscripcionController::class, 'Pagos']);
+
+    
+    
+    
+    
+
+    
+
 
 
 

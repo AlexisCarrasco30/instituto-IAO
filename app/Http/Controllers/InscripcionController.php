@@ -12,7 +12,7 @@ class InscripcionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function TodasIncripciones()
+    public function Incripciones()
     {
         $incripciones = Incripcion::where('estado','activo')
                                   ->orderBy('fecha','Desc')
@@ -42,7 +42,7 @@ class InscripcionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createInscripcion()
+    public function CreateInscripcion()
     { 
     //Traigo todas las Profesiones activas para que usuario lo pueda selecionar
         $profesiones = profesion::where('estado','activo')
@@ -57,7 +57,7 @@ class InscripcionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeInscripcion(Request $request)
+    public function StoreInscripcion(Request $request)
     {
         //Control de inputs
         $request->validate([
@@ -131,7 +131,7 @@ class InscripcionController extends Controller
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function editInscripcion(Inscripcion $inscripcion,$id)
+    public function EditInscripcion(Inscripcion $inscripcion,$id)
     {
         //Control de que exita la inscripcion activa
         $inscripcion = Inscripcion::where('id',$id)
@@ -153,7 +153,7 @@ class InscripcionController extends Controller
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function updateInscripcion(Request $request, $id)
+    public function UpdateInscripcion(Request $request, $id)
     {
       //Control de inputs
       $request->validate([
@@ -197,7 +197,7 @@ class InscripcionController extends Controller
                 $alumno = Alumno::find($alumno->id);
             }
         } 
-    //incersion de datos y guardado de inscripcion
+    //Incersion de datos y guardado de inscripcion
         $inscripcion                       = incripcion::find($id);
         $inscripcion->matriculo            = $request->matricula;
         $inscripcion->modalidad            = $request->modalidad;
@@ -212,12 +212,12 @@ class InscripcionController extends Controller
     }
 
     /**
-     * Baja de una materia..
+     * Baja de una incripcion
      * @param  int  $id
      * @param  \App\Models\Inscripcion  $inscripcion
      * @return \Illuminate\Http\Response
      */
-    public function destroyincripcion(Inscripcion $inscripcion , $id)
+    public function BajaIncripcion(Inscripcion $inscripcion , $id)
     {
         $inscripcion = inscripcion::find($id);
         $inscripcion->delete();

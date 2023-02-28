@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('idMulta')->nullable()->constrained('multas')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('idAlumno')->nullable()->constrained('personas')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('idProfesion')->nullable()->constrained('profesiones')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('idMes')->nullable()->constrained('mes')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

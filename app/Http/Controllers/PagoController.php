@@ -8,13 +8,19 @@ use Illuminate\Http\Request;
 class PagoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Se traen todos los pagos que no son Morosos.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function Pagos()
     {
-        //
+        $pagos = Pagos::where('estado','pagados')
+                      ->orderBy('updated_at','Desc')
+                      ->get();
+    
+        return view ('pago.pagos')
+                  ->with('pagos',$pagos); 
+        
     }
 
     /**
@@ -24,7 +30,28 @@ class PagoController extends Controller
      */
     public function create()
     {
-        //
+        //ivan  electricidad 
+        // id 4 es electricidad
+            //mes::where('idprofecion' '4') me trae todos meses
+        //         enero pago
+        //         febrero pago
+        //         marzo > aun mes actual
+        //         abril
+        // join    !=
+        //         pagos->mes 
+        //         enero
+        //         febrero
+
+
+        //         marzo y abril
+
+        //         febrero le sumo un mes 
+        //         me queda en marzo
+        //         <marzo y no son pagos 
+
+
+
+
     }
 
     /**
