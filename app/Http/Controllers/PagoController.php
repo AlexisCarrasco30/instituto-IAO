@@ -30,28 +30,8 @@ class PagoController extends Controller
      */
     public function create()
     {
-        //ivan  electricidad 
-        // id 4 es electricidad
-            //mes::where('idprofecion' '4') me trae todos meses
-        //         enero pago
-        //         febrero pago
-        //         marzo > aun mes actual
-        //         abril
-        // join    !=
-        //         pagos->mes 
-        //         enero
-        //         febrero
-
-
-        //         marzo y abril
-
-        //         febrero le sumo un mes 
-        //         me queda en marzo
-        //         <marzo y no son pagos 
-
-
-
-
+        return view ('pago.pagos')
+                  ->with('pagos',$pagos); 
     }
 
     /**

@@ -412,29 +412,29 @@ class PersonaController extends Controller
       * @param  \Illuminate\Http\Request  $request 
       * @return \Illuminate\Http\Response
       */
-      public function buscarDni(Request  $request)
+      public function BuscarDni(Request  $request)
       {  
          if(isset($request->tipo)){
              if(isset($request->estado)){
-                 $persona::where('dni',$request->dni)
-                         ->where('tipo',$request->tipo)
-                         ->where('estado',$request->estado)
-                         ->get();
+                 $persona = Persona::where('dni',$request->dni)
+                                   ->where('tipo',$request->tipo)
+                                   ->where('estado',$request->estado)
+                                   ->get();
              }
              else{
-                 $persona::where('dni',$request->dni)
-                         ->where('tipo',$request->tipo)
-                         ->get();
+                 $persona = Persona::where('dni',$request->dni)
+                                   ->where('tipo',$request->tipo)
+                                   ->get();
              }}
          else{
              if(isset($request->estado)){
-                 $persona::where('dni',$request->dni)
-                         ->where('estado',$request->estado)
-                         ->get();
+                 $persona = Persona::where('dni',$request->dni)
+                                   ->where('estado',$request->estado)
+                                   ->get();
              }
              else{
-                 $persona::where('dni',$request->dni)
-                         ->get();
+                 $persona = Persona::where('dni',$request->dni)
+                                   ->get();
              }
          }
          //si esta vacia la defino en null

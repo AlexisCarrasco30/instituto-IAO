@@ -224,4 +224,34 @@ class InscripcionController extends Controller
 
         return redirect('/Inscripciones/TodasIncripciones');
     }
+
+     /**
+      * Busqueda de profeciones inscritas por dni (ajax) 
+      *
+      * @param  \Illuminate\Http\Request  $request 
+      * @return \Illuminate\Http\Response
+      */
+      public function BuscarProfesionIncriptasDni(Request  $request)
+      {  
+        //Busco al alumno
+        $alumno = Persona::where('dni',$request->dni)
+                         ->where('estado','activo')
+                         ->get();
+         //Si esta vacia defino profesion en null
+         if ($alumno->isEmpty()){
+             $profesion = null;
+             return response(json_encode($profesion),200)->header('Content-type','text/plain');
+         }
+
+         $profesion = Profesion::join('incripciones','incripciones.idPofesion','=','profesion.id')
+                               ->join('personas',    'personas.id'            ,'=','incripciones.idAlumno')
+                               ->where('personas.tipo','alumno')
+                               ->where('personas.id',$alumno->id)
+                               ->get();
+                               
+         if ($profesion->isEmpty()){
+            $profesion = null;
+         }
+        return response(json_encode($profesion),200)->header('Content-type','text/plain');
+      }
 }
