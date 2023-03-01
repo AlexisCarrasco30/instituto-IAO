@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-
+Route::get('/index', function () {
+    return view('home') ;
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -36,7 +38,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::get ('/Edit/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'EditAlumno'         ]);
     Route::get ('/Baja/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'bajaAlumno'         ]);
     Route::get ('/Activar/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'ActivarAlumno'      ]);
-    
     
    //Rutas "Persona"   
     Route::post('/Buscar/Dni',          [App\Http\Controllers\PersonaController::class, 'BuscarDni']);

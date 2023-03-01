@@ -23,20 +23,10 @@ class PersonaController extends Controller
      */
     public function AlumnosActivos()
     { 
-
-        $subTutores = Persona::where('estado','activo')
-                          ->join('tutores','tutores.idTutor','=','personas.id')
-                          ->select('persona.*','tutores.idAlumno as alumno')
-                          ->get();
-
         $alumnos = Persona::where('tipo','alumno')
-                          ->where('estado','activo')
-                          ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
-                          ->joinSub($subtutores, 'subTutores', function (JoinClause $join) {
-                                $join->on('tutores.idTutor', '=', '$subTutores.alumno');})
-                          ->select('personas.*','subTutores.id AS idTutor','subTutores.dni AS dniTutor','subTutores.nombre AS nombreTutor','subTutores.apellido AS apellidoTutor')
-                          ->orderBy('apellido','Asc')
-                          ->get();
+                           ->where('estado','activo')
+                           ->orderBy('apellido','Asc')
+                           ->get();
 
         return view ('alumno.activos')
                   ->with('alumnos',$alumnos); 
@@ -49,11 +39,10 @@ class PersonaController extends Controller
      */
     public function AlumnosCorporativos()
     {
-        $alumnos    = Persona::where('tipo','alumno')
+        $alumnos    = Persona::where('tipo','alumnoCorporativo')
                              ->where('estado','activo')
                                 ->join('incripciones','incripciones.idAlumno','=','alumnos.id')
                                 ->join('profesiones','profesiones.tipo','=','incripciones.idProfesion')
-                             ->where('profesiones.tipo','=','corporativo')
                              ->orderBy('apellido','Asc')
                              ->get();
 
@@ -111,19 +100,11 @@ class PersonaController extends Controller
      */
     public function AlumnosInactivos()
     {
-        $subTutores = Persona::where('estado','activo')
-                             ->join('tutores','tutores.idTutor','=','personas.id')
-                             ->select('persona.*','tutores.idAlumno as alumno')
-                             ->get();
+        $alumnos = Persona::where('tipo','alumno')
+                          ->where('estado','inactivo')
+                          ->orderBy('apellido','Asc')
+                          ->get();
 
-        $alumnos    = Persona::where('tipo','alumno')
-                             ->where('estado','inactivo')
-                             ->leftJoin('tutores', 'tutores.idAlumno','=','personas.id')
-                             ->joinSub($subtutores, 'subTutores', function (JoinClause $join) {
-                                  $join->on('tutores.idTutor', '=', '$subTutores.alumno');})
-                             ->select('personas.*','subTutores.id AS idTutor','subTutores.dni AS dniTutor','subTutores.nombre AS nombreTutor','subTutores.apellido AS apellidoTutor')
-                             ->orderBy('apellido','Asc')
-                             ->get();
 
         return view ('alumno.inactivos')
                   ->with('alumnos',$alumnos); 

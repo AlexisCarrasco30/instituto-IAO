@@ -1,23 +1,30 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+@extends('layouts.menu') 
+<style>
+.titulo{
+    font-family: 'Gluten', cursive !important;
+    text-align: center; 
+    padding-top: 20px!important;
+    color:#016C98 !important;
+}
+.imagen{
+    height:700px!important; 
+     width:900px!important;
+     text-align: center !important;
+     padding-left: 10px !important;
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+}
+</style>
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+@section('contenido')
+<div class="content text-center">
+    <h2 class="titulo">Bienvenidos al Sistema de Instituto Argentino de Oficio</h2>
+
+    <img src="./imagenes/portada.jpg" class="imagen" alt="imagen de fondo sistema">
+    
 </div>
+
+
 @endsection
