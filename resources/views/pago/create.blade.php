@@ -19,6 +19,16 @@
                 <input id = "ApeNom" name = "ApeNom" type="text" readonly>
             </div>
         </div>
+        <div hidden>
+            <div>
+                <label for = "NombreTutor">Dni del tutor</label>
+                <input id  = "DniTutor" name = "DniTutor" type="text" readonly>
+            </div>
+            <div>
+                <label for = "nombre">Apellido y nombre</label>
+                <input id  = "ApeNom" name = "ApeNom" type="text" readonly>
+            </div>
+        </div>
         <!-- se muestra las profeciones a las cuales esta incripto-->
         <!-- utilizacion de ajax. y inner html ruta = '/Buscar/Profesion/Incriptas/DNI' -->
         <div>
@@ -27,7 +37,8 @@
             </select> 
         </div>
         <!-- tabla donde se muestran los meses disponibles para pagar se habilitar una vez que encuentra la profesion -->
-        <!-- ajax. y inner html  ruta = 'Mes/No/Pagados'-->
+        <!-- ajax. y inner html  ruta = '/Meses/Pendientes'-->
+        <!-- enviar idProfecion y dni del alumno -->
         <div>
             <thead>
                 <tr>    

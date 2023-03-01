@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //rutas de loguin y usuarios
     Auth::routes();
 
@@ -82,7 +81,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::get ('/Baja/Incripcion/{id}',           [App\Http\Controllers\InscripcionController::class, 'BajaIncripcion'             ]);
     
 //Rutas "Pago" controlador "PagoController"
-    Route::get ('/Pagos',   [App\Http\Controllers\InscripcionController::class, 'Pagos']);
+    Route::get ('/Pagos',            [App\Http\Controllers\InscripcionController::class, 'Pagos'          ]);
+    Route::post('/Meses/Pendientes', [App\Http\Controllers\InscripcionController::class, 'MesesPendientes']);
+
 
     
     
