@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Inscripcion;
 use Illuminate\Http\Request;
+use App\Models\Persona;
+use App\Models\Profesion;
+use App\Models\Telefono;
 
 class InscripcionController extends Controller
 {
@@ -45,7 +48,7 @@ class InscripcionController extends Controller
     public function CreateInscripcion()
     { 
     //Traigo todas las Profesiones activas para que usuario lo pueda selecionar
-        $profesiones = profesion::where('estado','activo')
+        $profesiones = Profesion::where('estado','activo')
                                 ->get();
         return view('inscripcion.create')
                   ->with('profesiones', $profesiones);
@@ -112,7 +115,40 @@ class InscripcionController extends Controller
         $alumno->tipo            = "alumno";
         $alumno->save();
 
-    //incersion de datos y guardado de inscripcion
+        //cambio de estado del numero que esta asignado para whatsapp
+        if($request->whatsapp == true){
+            $telefonoWhatsapp = Telefono::where('persona_id',$alumno->id)
+                                        ->where('whatsapp','true')
+                                        ->get();
+
+            $telefonoWhatsapp->whatsapp = false;
+            $telefonoWhatsapp->save();
+         }
+        
+       //Busco el telefono
+        $telefono = Telefono::where('codigoArea',$request->codigoArea)
+                            ->where('numero'    ,$request->numero)
+                            ->where('idPersona' ,$alumno->id)
+                            ->get();
+
+       //Si no la encuentro creo un
+        if($telefono->isEmpty()){
+
+            $telefono = new Telefono();
+        }
+        else{
+           //para que no me quede en forma de arreglo
+            $telefono = Telefono::find($telefono[0]->id);
+            }
+
+       //incersion de datos de telefono
+        $telefono->codigoArea = $request->codigoArea;
+        $telefono->numero     = $request->numero;
+        $telefono->whatsapp   = $request->whatsapp;
+        $telefono->persona_id = $alumno->id;
+        $telefono->save();
+
+       //incersion de datos y guardado de inscripcion
         $inscripcion                       = new Inscripcion();
         $inscripcion->matriculo            = $request->matricula;
         $inscripcion->modalidad            = $request->modalidad;

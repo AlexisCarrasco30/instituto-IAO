@@ -8,6 +8,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Models\Telefono;
+use App\Models\Tutor;
+use App\Models\Incripcion;
+use App\Models\Profesion;
+
 
 class PersonaController extends Controller
 {
@@ -186,25 +190,14 @@ class PersonaController extends Controller
             //para que no me quede en forma de arreglo
                $alumno = Persona::find($alumno[0]->id);
             //cambio de estado del numero que esta asignado para whatsapp
-               $telefonoWhatsapp = telefono::where('persona_id',$alumno->id)
+            if($request->whatsapp == true){
+               $telefonoWhatsapp = Telefono::where('persona_id',$alumno->id)
                                            ->where('whatsapp','true')
                                            ->get();
 
                $telefonoWhatsapp->whatsapp = false;
                $telefonoWhatsapp->save();
             }
-    //Busco el telefono
-            $telefono::where('codigoArea',$request->codigoArea)
-                     ->where('numero'    ,$request->numero)
-                     ->get();
-        //Si no la encuentro creo un
-            if($telefono->isEmpty()){
-
-                $telefono = new Telefono();
-            }
-            else{
-            //para que no me quede en forma de arreglo
-                    $telefono = Telefono::find($telefono[0]->id);
             }
 
    //incersion de datos de alumno
@@ -217,6 +210,22 @@ class PersonaController extends Controller
     $alumno->estado          = "activo";
     $alumno->tipo            = "alumno";
     $alumno->save();
+
+    //Busco el telefono
+    $telefono = Telefono::where('codigoArea',$request->codigoArea)
+                        ->where('numero'    ,$request->numero)
+                        ->where('idPersona' ,$alumno->id)
+                        ->get();
+
+   //Si no la encuentro creo un
+    if($telefono->isEmpty()){
+
+        $telefono = new Telefono();
+    }
+    else{
+   //para que no me quede en forma de arreglo
+        $telefono = Telefono::find($telefono[0]->id);
+    }
 
    //incersion de datos de telefono
     $telefono->codigoArea = $request->codigoArea;
@@ -294,23 +303,23 @@ class PersonaController extends Controller
             'numeroCalle'    => 'required|integer|min:1|max:9999',
         ]);
 
-        //busco al alumno activo que se va editar
+       //busco al alumno activo que se va editar
         $alumno = Persona::where('id',$id)
                          ->where('estado','activo')
                          ->where('tipo'  ,'alumno')
                          ->get();
 
-        //control de que el alumno no este
-            if($alumno->isEmpty()){
+       //control de que el alumno no este
+        if($alumno->isEmpty()){
 
-                return redirect(url()->previous());
-            }
-            else{
-                //para que no me quede en forma de arreglo
-                $alumno = Persona::find($alumno[0]->id);
-            }
+            return redirect(url()->previous());
+        }
+        else{
+           //para que no me quede en forma de arreglo
+            $alumno = Persona::find($alumno[0]->id);
+        }
 
-        //incersion de datos y guardado
+       //incersion de datos y guardado
         $alumno->dni             = $request->dni;
         $alumno->nombre          = $request->nombre;
         $alumno->apellido        = $request->apellido;
