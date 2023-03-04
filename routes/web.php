@@ -104,3 +104,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+/*carreras */ 
+Route::get('/CarrerasActivas', function () {
+    return view('profesion.activas') ;
+});
+
+
+/*carreras */ 
+Route::get('/MateriasActivas', function () {
+    return view('materia.activas') ;
+});
