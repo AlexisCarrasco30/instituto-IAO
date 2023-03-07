@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profesion extends Model
 {
     use HasFactory;
-    protected $table = ['profesiones'];
+    protected $table = 'profesiones';
 
     //relacion una profesion tiene muchas materias
     public function Materias()

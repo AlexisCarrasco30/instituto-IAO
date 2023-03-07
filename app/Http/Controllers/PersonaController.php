@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Models\Telefono;
 use App\Models\Tutor;
-use App\Models\Incripcion;
+use App\Models\Inscripcion;
 use App\Models\Profesion;
+use App\Models\Pago;
+use App\Models\ClasificacionAlumno;
+use App\Models\Notificacion_Moroso;
+use App\Models\Examen;
+use App\Models\User;
 
 
 class PersonaController extends Controller
@@ -23,13 +28,20 @@ class PersonaController extends Controller
      */
     public function AlumnosActivos()
     { 
-        $alumnos = Persona::where('tipo','alumno')
-                           ->where('estado','activo')
+        $tipoAlumno = 'activos';
+        $alumnos = Persona::select('personas.*','telefonos.numero')
+                           ->where('personas.tipo','alumno')
+                           ->where('personas.estado','activo')
+                           ->leftjoin('telefonos','telefonos.idPersona','=','personas.id')
                            ->orderBy('apellido','Asc')
                            ->get();
-
+     
+        $clasificacion  = ClasificacionAlumno::all(); 
+        
         return view ('alumno.activos')
-                  ->with('alumnos',$alumnos); 
+                  ->with('alumnos',$alumnos)
+                  ->with('tipoAlumno',$tipoAlumno)
+                  ->with('clasificacion',$clasificacion); 
     }
 //------------------------------------------------------------------------
 /**
@@ -39,6 +51,7 @@ class PersonaController extends Controller
      */
     public function AlumnosCorporativos()
     {
+        $tipoalumno = 'corporativo';
         $alumnos    = Persona::where('tipo','alumnoCorporativo')
                              ->where('estado','activo')
                                 ->join('incripciones','incripciones.idAlumno','=','alumnos.id')
@@ -46,9 +59,12 @@ class PersonaController extends Controller
                              ->orderBy('apellido','Asc')
                              ->get();
 
+        $clasificacion  = ClasificacionAlumno::all(); 
+
         return view ('alumno.activos')
                   ->with('alumnos',$alumnos)
-                  ->with('tipoalumno',$tipoalumno);  
+                  ->with('tipoalumno',$tipoalumno)
+                  ->with('clasificacion',$clasificacion);  
 
     }
 //------------------------------------------------------------------------
@@ -68,9 +84,12 @@ class PersonaController extends Controller
                              ->orderBy('apellido','Asc')
                              ->get();
 
+        $clasificacion  = ClasificacionAlumno::all(); 
+
         return view ('alumno.activos')
                   ->with('alumnos',$alumnos)
-                  ->with('tipoalumno',$tipoalumno); 
+                  ->with('tipoalumno',$tipoalumno)
+                  ->with('clasificacion',$clasificacion); 
     }
 //------------------------------------------------------------------------
 /**
@@ -87,10 +106,13 @@ class PersonaController extends Controller
                              ->where('profesiones.tipo','=','cursos')
                              ->orderBy('apellido','Asc')
                              ->get();
-                             
+
+        $clasificacion  = ClasificacionAlumno::all(); 
+
         return view ('alumno.activos')
                   ->with('alumnos',$alumnos)
-                  ->with('tipoalumno',$tipoalumno); 
+                  ->with('tipoalumno',$tipoalumno)
+                  ->with('clasificacion',$clasificacion); 
     }
 //------------------------------------------------------------------------
     /**
@@ -100,13 +122,17 @@ class PersonaController extends Controller
      */
     public function AlumnosInactivos()
     {
-        $alumnos = Persona::where('tipo','alumno')
-                          ->where('estado','inactivo')
-                          ->orderBy('apellido','Asc')
-                          ->get();
+        $alumnos = Persona::select('personas.*','telefonos.numero')
+                           ->where('personas.tipo','alumno')
+                           ->where('personas.estado','inactivo')
+                           ->leftjoin('telefonos','telefonos.idPersona','=','personas.id')
+                           ->orderBy('apellido','Asc')
+                           ->get();
 
+        $tipoAlumno = 'inactivo';
 
         return view ('alumno.inactivos')
+                  ->with('tipoAlumno', $tipoAlumno)
                   ->with('alumnos',$alumnos); 
     }
 //------------------------------------------------------------------------
@@ -117,23 +143,20 @@ class PersonaController extends Controller
      */
     public function AlumnosUltimos()
     {
-        $alumnos = Persona::where('tipo','alumno')
-                          ->where('estado','activo')
+
+        $alumnos = Persona::select('personas.*','telefonos.numero')
+                          ->where('personas.tipo','alumno')
+                          ->where('personas.estado','activo')
+                              ->leftjoin('telefonos','telefonos.idPersona','=','personas.id')
                           ->orderBy('updated_at','Desc')
                           ->get();
 
+         $clasificacion  = ClasificacionAlumno::all(); 
+
         return view ('alumno.activos')
-                  ->with('alumnos',$alumnos); 
-    }
-//------------------------------------------------------------------------
-    /**
-     * Crea nuevo alumno.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function CreateAlumno()
-    {
-        return view('alumno.create');
+                  ->with('alumnos',$alumnos)
+                  ->with('tipoalumno','activos')
+                  ->with('clasificacion',$clasificacion); 
     }
 //------------------------------------------------------------------------
     /**
@@ -144,22 +167,20 @@ class PersonaController extends Controller
      */
     public function StoreAlumno(Request $request)
     {
+        
     //Control de inputs
         $request->validate([
             'nombre'         => 'required|string',
             'apellido'       => 'required|string',
             'dni'            => 'required|integer|max:100000000|min:1000000',
-            'fechaNacimiento'=> 'date',
-            'calle'          => 'required|string|max:256| min:4',
-            'numeroCalle'    => 'required|integer|min:1|max:9999',
-            'codigoArea'     => 'required|numeric|max:9999|min:99',
-            'numero'         => 'required|numeric|max:9999999|min:999999', 
-            'whatsapp'       => 'required|boolean', 
+            'direccion'      => 'required|string|max:256| min:2',
+            'localidad'      => 'required|string|max:256| min:4',
+            'celular'        => 'required|numeric|max:9999999)|min:999999', 
         ]);
     //Controles de datos exitentes
 
      //Busco si la alumno ya esta exitente
-            $alumno = alumno::where('dni',$request->dni)
+            $alumno = Persona::where('dni',$request->dni)
                               ->get();
     
         //Si no la encuentra creo una
@@ -170,49 +191,48 @@ class PersonaController extends Controller
             else{
             //para que no me quede en forma de arreglo
                $alumno = Persona::find($alumno[0]->id);
-            //cambio de estado del numero que esta asignado para whatsapp
-            if($request->whatsapp == true){
-               $telefonoWhatsapp = Telefono::where('persona_id',$alumno->id)
-                                           ->where('whatsapp','true')
-                                           ->get();
-
-               $telefonoWhatsapp->whatsapp = false;
-               $telefonoWhatsapp->save();
-            }
             }
 
    //incersion de datos de alumno
     $alumno->dni             = $request->dni;
     $alumno->nombre          = $request->nombre;
     $alumno->apellido        = $request->apellido;
-    $alumno->numeroCalle     = $request->numeroCalle;
-    $alumno->calle           = $request->calle;
-    $alumno->fechaNacimiento = $request->fechaNacimiento;
+    $alumno->direccion       = $request->direccion;
+    $alumno->localidad       = $request->localidad;
     $alumno->estado          = "activo";
     $alumno->tipo            = "alumno";
     $alumno->save();
 
-    //Busco el telefono
-    $telefono = Telefono::where('codigoArea',$request->codigoArea)
-                        ->where('numero'    ,$request->numero)
+   //Busco el telefono
+    $telefono = Telefono::where('numero'    ,$request->celular)
                         ->where('idPersona' ,$alumno->id)
                         ->get();
 
-   //Si no la encuentro creo un
+    //Si no la encuentro limpio y creo uno nuevo
     if($telefono->isEmpty()){
+        $telefonoAnteriores = Telefono::where('idPersona',$alumno->id)
+                                        ->get();
 
+        if(!$telefonoAnteriores->isEmpty()){
+
+            foreach($telefonoAnteriores as $unTelefono){
+
+                $unTelefono->delete();
+            }
+        }                            
         $telefono = new Telefono();
-    }
+        }
     else{
-   //para que no me quede en forma de arreglo
+      //para que no me quede en forma de arreglo
         $telefono = Telefono::find($telefono[0]->id);
     }
 
+
    //incersion de datos de telefono
-    $telefono->codigoArea = $request->codigoArea;
-    $telefono->numero     = $request->numero;
-    $telefono->whatsapp   = $request->whatsapp;
-    $telefono->persona_id = $alumno->id;
+    $telefono->numero     = $request->celular;
+    $telefono->whatsapp   = true;
+    $telefono->estado     = 'activo';
+    $telefono->idPersona  = $alumno->id;
     $telefono->save();
 
     return redirect('/Alumnos/Ultimos');
@@ -274,14 +294,15 @@ class PersonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function UpdateAlumno(Request $request, $id)
-    {
+    {  
+        //control de inputs
         $request->validate([
             'nombre'         => 'required|string',
             'apellido'       => 'required|string',
             'dni'            => 'required|integer|max:100000000|min:1000000',
-            'fechaNacimiento'=> 'date',
-            'calle'          => 'required|string|max:256| min:4',
-            'numeroCalle'    => 'required|integer|min:1|max:9999',
+            'direccion'      => 'required|string|max:256| min:2',
+            'localidad'      => 'required|string|max:256| min:4',
+            'celular'         => 'required|numeric|max:9999999)|min:999999', 
         ]);
 
        //busco al alumno activo que se va editar
@@ -299,17 +320,48 @@ class PersonaController extends Controller
            //para que no me quede en forma de arreglo
             $alumno = Persona::find($alumno[0]->id);
         }
-
+        
        //incersion de datos y guardado
         $alumno->dni             = $request->dni;
         $alumno->nombre          = $request->nombre;
         $alumno->apellido        = $request->apellido;
-        $alumno->numeroCalle     = $request->numeroCalle;
-        $alumno->calle           = $request->calle;
-        $alumno->fechaNacimiento = $request->fechaNacimiento;
+        $alumno->direccion       = $request->direccion;
+        $alumno->localidad       = $request->localidad;
         $alumno->estado          = "activo";
         $alumno->tipo            = "alumno";
         $alumno->save();
+
+       //Busco el telefono
+        $telefono = Telefono::where('numero'    ,$request->celular)
+                            ->where('idPersona' ,$alumno->id)
+                            ->get();
+
+      //Si no la encuentro limpio y creo uno nuevo
+        if($telefono->isEmpty()){
+            $telefonoAnteriores = Telefono::where('idPersona',$alumno->id)
+                                           ->get();
+
+            if(!$telefonoAnteriores->isEmpty()){
+
+                foreach($telefonoAnteriores as $unTelefono){
+
+                    $unTelefono->delete();
+                }
+            }                            
+            $telefono = new Telefono();
+        }
+        else{
+           //para que no me quede en forma de arreglo
+            $telefono = Telefono::find($telefono[0]->id);
+        }
+
+        //incersion de datos de telefono
+        $telefono->numero     = $request->celular;
+        $telefono->whatsapp   = true;
+        $telefono->estado     = 'activo';
+        $telefono->idPersona  = $alumno->id;
+        $telefono->save();
+
 
         return redirect('/Alumnos/Ultimos');
     }
@@ -323,8 +375,8 @@ class PersonaController extends Controller
     public function bajaAlumno($id)
     {
         //busco al alumno 
-        $alumno = Persona::find($id);
-
+        $alumno = Persona::where('id',$id)
+                          ->get();
         //control de que el alumno no este
             if($alumno->isEmpty()){
 
@@ -332,66 +384,50 @@ class PersonaController extends Controller
             }
         //control de eliminacion en caso que no este relacionado con entidades importantes
 
-           //buscar si tiene relaciones imortante
-           $incripciones        = Inscripcion       ::where('idAlumno',$id)->get();
-           $pagos               = Pago              ::where('idAlumno',$id)->get();
-           $notificacionMorosos = NotificacionMoroso::where('idPersona',$id)->get();
-           $examenes            = Examen            ::where('idAlumno',$id)->get();
-
+           //buscar si tiene relaciones importante
+           $inscripciones       = inscripcion        ::where('idAlumno',$id)->get();
+           $pagos               = Pago               ::where('idAlumno',$id)->get();
+           $notificacionMorosos = Notificacion_Moroso::where('idPersona',$id)->get();
+           $examenes            = Examen             ::where('idAlumno',$id)->get();
+     
         //eliminar en csao que no tenga relaciones
-            if($incripciones->isEmpty()){
+            if($inscripciones->isEmpty()){
                 if($pagos->isEmpty()){
                     if($notificacionMorosos->isEmpty()){
 
                         if($examenes->isEmpty()){
+                           
                         //lo elimino de la tabla usuario
                             $user = User::join('personas','personas.idUsuario','=','users.id')
-                                        ->where('persoanas.id',$id)
+                                        ->where('personas.id',$id)
                                         ->get();
 
                             if(!$user->isEmpty()){
+                                
                                 $user[0]->delete();
                             }
                             
                         //elimino los telefonos asociados
-                         $telefonos = Telefono::where('persona_id',$id)
+                         $telefonos = Telefono::where('idPersona',$id)
                                               ->get();
                                               
                         if(!$telefonos->isEmpty()){
-                            
                             foreach($telefonos as $unTelefono){
                                 $unTelefono->delete();
                              }
                         }
-                         //elimino de la tabla tutor
-                         $tutor   = Tutor::Where('idAlumno',$id)
-                                         ->get();
-                        
-                         if(!$tutor->isEmpty()){
-                            $persona = personas::Where('id',$tutor[0]->idTutor)
-                                               ->get();
-                            $tutor->delete();
-                            // si el tutor no esta a cargo de otra persona y es turor se elimina
-                            $tutor  = tutor::Where('idTutor', $persona[0]->id)
-                                           ->get();
-                            
-                            if($tutor->isEmpty() and $persona->tipo = 'tutor'){
-                                
-                                $persona->delete();
-                            }
-                            
                          //elimino el alumno
-                         $alumno->delete;
-                         } 
-                        }
+                         $alumno->each->delete();
+                         return redirect('/Alumnos/Activos');
+                        } 
                     }
-                }
+                    }
             }
+            
         //caso en que el alumno tenia alguna tabla de relacion, en este caso se da una baja logica
-        if(!$alumno->isEmpty()){
+        
             $alumno->estado = 'inactivo';
             $alumno->save();
-        }
         return redirect('/Alumnos/Activos');
     }
 

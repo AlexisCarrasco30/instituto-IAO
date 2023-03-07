@@ -89,4 +89,23 @@ class PagoController extends Controller
     {
         //
     }
+
+    /**
+      * Busqueda por meses posibles o pendientes a pagar (ajax) 
+      *
+      * @param  \Illuminate\Http\Request  $request 
+      * @return \Illuminate\Http\Response
+      */
+      public function MesesPendientes(Request  $request)
+      { 
+       //Busco al alumno 
+       $Alumno = Alumno::where('dni',$request->dni)
+                        ->get();
+                        
+       //Busco si tiene turtor
+        $
+        $meses = Mes:: where('idProfesion',$res);
+      }
+
+    
 }

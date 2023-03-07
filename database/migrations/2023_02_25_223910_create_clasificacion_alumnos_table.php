@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateClasificacionAlumnosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('telefonos', function (Blueprint $table) {
+        Schema::create('clasificacion_alumnos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('numero');
-            $table->boolean('whatsapp');
-            $table->string('estado');
+            $table->string('descripcion');
+            $table->float('porcentajeDesc');
+            $table->string('corporativo');
             $table->timestamps();
-            $table->foreignId('idPersona')->nullable()->constrained('personas')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('telefonos');
+        Schema::dropIfExists('clasificacion_alumnos');
     }
-};
+}

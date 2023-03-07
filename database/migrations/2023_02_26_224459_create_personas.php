@@ -19,12 +19,12 @@ return new class extends Migration
             $table->integer('dni');
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('numeroCalle');
-            $table->string('calle');
-            $table->date('fechaNacimiento');
+            $table->string('direccion');
+            $table->string('localidad');
             $table->string('tipo');
             $table->string('estado');
             $table->foreignId('idUsuario')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('idClasificacion')->nullable()->constrained('clasificacion_alumnos')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

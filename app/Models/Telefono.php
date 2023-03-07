@@ -9,8 +9,10 @@ class Telefono extends Model
 {
     use HasFactory;
 
-//Un telefono pertenece a una persona 
-public function Persona()
+/**
+ * Obtener la persona propietaria del teléfono.
+ */
+public function persona()
 {
     return $this->belongsTo(Persona::class);
 }

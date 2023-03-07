@@ -8,16 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Persona extends Model
 {
     use HasFactory;
-
-//relacion una persona tiene muchos telefonos 
+ /**
+ * Obtener teléfono de una persona.
+ */
 public function telefonos()
-    {
-        return $this->hasmany(Telefono::class);
-    }
+{
+    return $this->hasone(Telefono::class);
+}
 
-//relacion una persoana tiene un usuario
+//relacion una persona tiene un usuario
 public function usuario()
     {
         return $this->hasOne(User::class);  
+    }
+//relacion una persona tiene un usuario
+public function CalsificacionAlumno()
+    {
+        return $this->hasOne(CalsificacionAlumno::class);  
     }
 }

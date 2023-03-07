@@ -65,7 +65,6 @@ transform: scale(1.1)!important ;
             <i class="fa-solid fa-user"></i> Alumnos
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          
             <li><a class="dropdown-item" href="/Alumnos/Activos">Alumnos Activos</a></li>
             <li><a class="dropdown-item" href="">Corporativos</a></li>
             <li><a class="dropdown-item" href="#">Cursos</a></li>

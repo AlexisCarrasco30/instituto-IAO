@@ -185,6 +185,7 @@ class TelefonoController extends Controller
     public function BajaTelefono(Telefono $telefono,$id)
     {
         $telefono = Telefono::find($id);
+        
         $telefono->delete();
         
         return redirect($request->get('urlAnterior'));

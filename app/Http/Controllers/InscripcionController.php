@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Inscripcion;
 use Illuminate\Http\Request;
-use App\Models\Persona;
-use App\Models\Profesion;
-use App\Models\Telefono;
 
 class InscripcionController extends Controller
 {

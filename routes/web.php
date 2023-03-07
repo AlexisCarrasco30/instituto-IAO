@@ -34,7 +34,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::get ('/Alumnos/Secundaria',   [App\Http\Controllers\PersonaController::class, 'AlumnosSecundaria'  ]);
     Route::get ('/Alumnos/Cursos',       [App\Http\Controllers\PersonaController::class, 'AlumnosCursos'      ]);
     Route::get ('/Alumnos/Ultimos',      [App\Http\Controllers\PersonaController::class, 'AlumnosUltimos'     ]);
-    Route::get ('/Create/Alumno',        [App\Http\Controllers\PersonaController::class, 'CreateAlumno'       ]);
     Route::get ('/Edit/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'EditAlumno'         ]);
     Route::get ('/Baja/Alumno/{id}',     [App\Http\Controllers\PersonaController::class, 'bajaAlumno'         ]);
     Route::get ('/Activar/Alumno/{id}',  [App\Http\Controllers\PersonaController::class, 'ActivarAlumno'      ]);

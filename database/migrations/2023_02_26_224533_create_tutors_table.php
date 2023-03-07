@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('tutores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idTutor')->nullable()->constrained('personas')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('idAlumno')->nullable()->constrained('personas')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('Relacion');
+            $table->string('relacion');
             $table->timestamps();
         });
     }
