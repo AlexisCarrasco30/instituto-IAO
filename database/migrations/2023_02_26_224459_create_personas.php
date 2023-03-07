@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('estado');
             $table->foreignId('idUsuario')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('idClasificacion')->nullable()->constrained('clasificacion_alumnos')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('idTutor')->nullable()->constrained('tutores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
