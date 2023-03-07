@@ -107,6 +107,11 @@ table th{
       @csrf
         <div class="modal-body cuerpo_modal">
             <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg">DNI</span>
+                <input type="text" class="form-control" name= 'dni' id= 'dni' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+            </div>
+            <br>
+            <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg">Nombre</span>
                 <input type="text" class="form-control" name= 'nombre' id= 'nombre' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
             </div>
@@ -114,11 +119,6 @@ table th{
             <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg">Apellido</span>
                 <input type="text" class="form-control" name= 'apellido' id= 'apellido' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-            </div>
-            <br>
-            <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg">DNI</span>
-                <input type="text" class="form-control" name= 'dni' id= 'dni' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
             </div>
             <br>
             <div class="input-group input-group-lg">
@@ -255,11 +255,10 @@ $(document).ready(function() {
 
                         for(let j = 0; j < cantOpciones; j++){
                             if(seleccion[j].value == alumnos[x].idClasificacion ){
-                                console.log(seleccion[j].value );
+
+                                console.log(seleccion[j].value);
                                 console.log(alumnos[x].idClasificacion);
-                                console.log(seleccion[j].selected);
                                 seleccion[j].selected = true;
-                                console.log(seleccion[j].selected);
                                 j = cantOpciones;
                             }
                         }

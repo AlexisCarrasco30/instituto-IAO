@@ -194,6 +194,7 @@ class PersonaController extends Controller
             }
 
    //incersion de datos de alumno
+   
     $alumno->dni             = $request->dni;
     $alumno->nombre          = $request->nombre;
     $alumno->apellido        = $request->apellido;
@@ -201,6 +202,7 @@ class PersonaController extends Controller
     $alumno->localidad       = $request->localidad;
     $alumno->estado          = "activo";
     $alumno->tipo            = "alumno";
+    $alumno->idClasificacion = $request->clasificacion;
     $alumno->save();
 
    //Busco el telefono
@@ -234,6 +236,7 @@ class PersonaController extends Controller
     $telefono->estado     = 'activo';
     $telefono->idPersona  = $alumno->id;
     $telefono->save();
+
 
     return redirect('/Alumnos/Ultimos');
 
