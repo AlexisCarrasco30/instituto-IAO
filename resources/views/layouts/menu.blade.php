@@ -68,7 +68,7 @@ transform: scale(1.1)!important ;
             <li><a class="dropdown-item" href="/Alumnos/Activos">Alumnos Activos</a></li>
             <li><a class="dropdown-item" href="">Corporativos</a></li>
             <li><a class="dropdown-item" href="#">Cursos</a></li>
-            <li><a class="dropdown-item" href="Alumnos/Inactivos">Alumnos Inactivo</a></li>
+            <li><a class="dropdown-item" href="/Alumnos/Inactivos">Alumnos Inactivo</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">

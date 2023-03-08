@@ -242,7 +242,7 @@ $(document).ready(function() {
 
                        // ingreso los datos del alumno y paso el modal a modo edicion
                         document.getElementById('formulario').action     = '/Update/Alumno/'+alumnos[x].id;
-                        document.getElementById('tituloModal').innerHTML ="Editar Alumno";
+                        document.getElementById('tituloModal').innerHTML = "Editar Alumno";
                         document.getElementById('nombre').value          = alumnos[x].nombre;
                         document.getElementById('apellido').value        = alumnos[x].apellido;
                         document.getElementById('dni').value             = alumnos[x].dni;
@@ -294,7 +294,7 @@ $(document).ready(function() {
                         }
                         Swal.fire({
                             title: 'Esta Seguro que desea Borrar al alumno '+nombre+'?',
-                            text: "confirme la decisión!",
+                            text: "Recuerde de en caso de que este alumno ya haya estado inscrito se lo asentara en alumnos inactivo. Confirme la decisión!",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',

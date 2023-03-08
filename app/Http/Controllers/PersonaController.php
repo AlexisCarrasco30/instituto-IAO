@@ -243,28 +243,6 @@ class PersonaController extends Controller
     }
 //------------------------------------------------------------------------
     /**
-     * Mostrar los datos para editarlos-
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function EditAlumno($id)
-    {
-    //control de que el alumno no este y sea activo
-    $alumno = Persona::where('id',$id)
-                     ->where('estado','activo')
-                     ->where('tipo'  ,'alumno')
-                     ->get();
-
-        if($alumno->isEmpty()){
-
-            return redirect(url()->previous());
-        }
-
-        return view('alumno.edit')
-                  ->with('alumno', $alumno);
-    }
-//------------------------------------------------------------------------
-    /**
      * Activar alumno que estaba inactivo
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -276,15 +254,15 @@ class PersonaController extends Controller
                          ->where('estado','inactivo')
                          ->where('tipo'  ,'alumno')
                          ->get();
-
+        
         if($alumno->isEmpty()){
 
             return redirect(url()->previous());
         }
 
-    //cambio de estado
-        $alumno->estado='activo';
-        $alumno->save();
+    //cambio de estado como trae un arreglo el dato esta en la primera posicion
+        $alumno[0]->estado ='activo';
+        $alumno[0]->save();
 
         return redirect('/Alumnos/Ultimos');
     }
