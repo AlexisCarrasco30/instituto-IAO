@@ -1,59 +1,42 @@
 @extends('layouts.menu')
 
 
+@section('contenido')
 <style>
-table th{
-    background-color: #016C98 !important;
-    color:#ffffff;
-}
+.categoria{
+display: flex;
+justify-content: end;
+padding-top:.-10px !important;
 
+}
+.dt-button{
 
-.cuerpo_modal{
-    background-color:#016C98 !important;
-}
-.cabecera_modal{
-    text-align: justify!important;
-    color:white;
-    background-color:#016C98 !important;
-}
-.footer_modal{
-    background-color:#016C98 !important;
-}
-.eliminar{
-    color:red !important;
-}
-.eliminar:hover{
-    color:black!important;
-}
-.whatsApp{
-    color:green !important;
-}
-.whatsApp:hover{
-    color:black!important;
-}
-.editar{
-    color:blue!important;
-}
-.editar:hover{
-    color:black !important;
-}
+  margin: 10px !important;
+  background-color:#0191ca !important;
+  color: #ffffff!important;
+border-radius: 10px !important;
+}  
 
 </style>
-@section('contenido')
 
 <div class="container">
     <div class="text-center p-4">
         <h1>Alumnos Activos</h1>
     </div>
+  
     <div class="row">
+            <div class="col-md-6 col-xs-12 text-start">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='agregarAlumno'>
+                <i class="fa-solid fa-user-plus"></i> Agregar Alumno
+                </button>
+                </div>
+            <div class="col-md-6 col-xs-12 text-end">
+                <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModalCategoria" id ='agregarAlumno'>
+                    <i class="fa-solid fa-list"></i> Agregar Categoria
+                </button>
+             </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='agregarAlumno'>
-        <i class="fa-solid fa-user-plus"></i> Agregar Alumno
-        </button>
-        </div>
         <div class="col-12 p-3"></div>
     </div>
        <div class="row">
@@ -95,7 +78,7 @@ table th{
 
 
 
-<!-- Modal -->
+<!-- Modal Alumnos -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -155,9 +138,54 @@ table th{
     </div>
   </div>
 </div>
+
+
+<!-- Modal Categorias-->
+<div class="modal fade" id="exampleModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabelCategoria" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><strong id= 'tituloModal'><strong> Categoría</strong></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method ="POST" id="formulario" name="formulario">
+        @csrf
+          <div class="modal-body cuerpo_modal">
+          
+              <div class="input-group input-group-lg">
+                  <span class="input-group-text" id="inputGroup-sizing-lg">Nombre </span>
+                  <input type="text" class="form-control" name= 'nombreCategoria' id= 'nombreCategoria' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="De la categoría">
+              </div>
+              <br>
+              <div class="input-group input-group-lg">
+                  <span class="input-group-text" id="inputGroup-sizing-lg">Corporativo</span>
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                    </option>
+                  </select>
+              </div>
+              <br>
+             
+              <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg">Precio de Matricula</span>
+                <input type="text" class="form-control" name= 'precioMatricula' id= 'precioMatricula'aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+            </div>
+              </div>
+            
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit"  class="btn btn-primary" id ="botonGuardar">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 <!-- script de aler sweet -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <!-- inicializacion de data table -->
 <script>
 
@@ -170,12 +198,17 @@ $(document).ready(function() {
         buttons: [
             'excel', 'pdf', 'print'
         ],
+       
+
+
         language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
         }
     } );
 } );
+
 </script>
+
 
 
 <!-- limpieza  y poner modal en modo creacion-->

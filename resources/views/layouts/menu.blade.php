@@ -1,54 +1,15 @@
 
  @extends('layouts.plantillaBase') 
-
-     <!--Data Table -->
-     <link href="https://cdn.datatables.net/v/dt/dt-1.13.3/r-2.4.0/datatables.min.css"/>
- 
-     <link href=" https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
- 
-<style>
  
 
-h1,h2,h3,h4,h5,h6{
-  color:#016C98;
-}
-p,h1,h2,h3,h4,h5,h6,a{
-  font-family: 'Gluten', cursive !important;
-}
-.navbar-nav li{
-
-font-family: 'Gluten', cursive !important;
-padding: 5px!important;
-}
-.navbar-nav a{
-  color:beige !important;
-}
-ul .dropdown-menu{
-  background-color:#016C98;
-  color:beige !important;
-
-}
-
- a.dropdown-item {
-
-  color:rgb(255, 255, 255) !important;
-   padding: 10px;
- 
-   
-}
-a.dropdown-item:hover{
-  background-color:orangered !important;
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75) !important; 
--webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75)!important; 
--moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75)!important; 
-transform: scale(1.1)!important ;
--webkit-transform: scale(1.1)!important ;
--moz-transform: scale(1.1)  !important;
-} 
-
-</style>
+    <!--data table  -->
+    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/2.3.5/css/buttons.dataTables.min.css"/> 
 
 
+     <link rel="stylesheet" href="{{ asset('estilo.css') }}" />
+
+  
  <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #016C98;">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="#">Sistema IAO</a>
@@ -124,14 +85,18 @@ transform: scale(1.1)!important ;
   </div>
 </nav>
 
- <!-- data table script -->
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <!-- Data Table script -->
+ <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script> 
+
+
+
+
+
 

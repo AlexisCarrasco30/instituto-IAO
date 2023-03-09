@@ -1,48 +1,7 @@
 @extends('layouts.menu')
 
-
 <style>
-table th{
-    background-color: #016C98 !important;
-    color:#ffffff;
-}
 
-
-.cuerpo_modal{
-    background-color:#016C98 !important;
-}
-.cabecera_modal{
-    text-align: justify!important;
-    color:white;
-    background-color:#016C98 !important;
-}
-.footer_modal{
-    background-color:#016C98 !important;
-}
-.eliminar{
-    color:red !important;
-}
-.eliminar:hover{
-    color:black!important;
-}
-.verMaterias{
-    color:green !important; 
-}
-.verMaterias:hover{
-    color:black!important;
-}
-.editar{
-    color:blue!important; 
-}
-.editar:hover{
-    color:black !important;
-}
-.verAlumnos{
-    color:cyan!important; 
-}
-.verAlumnos:hover{
-    color:black !important;
-}
 </style>
 @section('contenido')
 <div class="container">
@@ -57,6 +16,7 @@ table th{
         <button type="button" class="btn btn-primary" title="Agregar Carrera" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fa-solid fa-graduation-cap"></i> Agregar Carreras  
         </button>
+        
         </div>
         <div class="col-12 p-3"></div>
     </div>

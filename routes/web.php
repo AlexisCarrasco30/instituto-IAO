@@ -20,6 +20,11 @@ Route::get('/index', function () {
     return view('home') ;
 });
 
+Route::get('/Carreras', function () {
+    return view('profesion.CarrerasActivas') ;
+});
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //rutas de loguin y usuarios
