@@ -45,18 +45,17 @@ table th{
 }
 </style>
 @section('contenido')
-
 <div class="container">
     <div class="text-center p-4">
-        <h1>Carreras</h1>
+        <h1>Cursos</h1>
     </div>
     <div class="row">
     </div>
     <div class="row">
         <div class="col-12">
             <!-- Button trigger modal -->
-        <button type="button" id= "agregarCarrera" class="btn btn-primary" title="Agregar Carrera" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-            <i class="fa-solid fa-graduation-cap"></i> Agregar Carrera  
+        <button type="button" id="agregarCurso"class="btn btn-primary" title="Agregar Curso" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fa-solid fa-graduation-cap"></i> Agregar Curso  
         </button>
         </div>
         <div class="col-12 p-3"></div>
@@ -75,17 +74,16 @@ table th{
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($carreras as $unaCarrera)
+                    @foreach($cursos as $unCurso)
                         <tr>
-                            <td>{{$unaCarrera->titulo}}</td>
-                            <td>{{$unaCarrera->precioMatricula}}</td>
-                            <td>{{$unaCarrera->planEstudio}}</td>
-                            <td>{{$unaCarrera->duracion}}</td>
+                            <td>{{$unCurso->titulo}}</td>
+                            <td>{{$unCurso->precioMatricula}}</td>
+                            <td>{{$unCurso->planEstudio}}</td>
+                            <td>{{$unCurso->duracion}}</td>
                             <td>        
-                                <a href="#" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
-                            <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
-                            <a href="#" name="Editar" class="btn editar" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
+                                <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
+                                <a href="#" name="Editar" class="btn editar" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -132,15 +130,19 @@ table th{
             <br>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type= "button"class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type= "submit"class="btn btn-primary">Guardar</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
+
+
+
 <script>
+
 $(document).ready(function() {
     $('#example').DataTable( {
         "bSort": true, // Con esto le estás diciendo que se pueda ordenar, ponlo a 'true'
@@ -154,11 +156,12 @@ $(document).ready(function() {
         }
     } );
 } );
+
 </script>
 
 <!-- limpieza  y poner modal en modo creacion-->
-    <script>
-        let agregarCarrera = document.getElementById('agregarCarrera');
+<script>
+        let agregarCarrera = document.getElementById('agregarCurso');
         agregarCarrera.addEventListener('click', function(){
                 
             document.getElementById('tituloModal').innerHTML ="Agregar Carrera";
@@ -170,7 +173,7 @@ $(document).ready(function() {
             document.getElementById('duracion').value         ='';
 
             let formulario    = document.getElementById('formulario');
-            formulario.action = '/Store/Profesion/carrera';
+            formulario.action = '/Store/Profesion/curso';
 
         })                
     </script>

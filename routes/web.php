@@ -51,17 +51,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::get ('/Baja/Telefono/{id}',   [App\Http\Controllers\TelefonoController::class, 'BajaTelefono'  ]);
 
 //Rutas "Profesion" controlador "ProfesionController"   
-    Route::post('/Store/Profesion/{id}',   [App\Http\Controllers\ProfesionController::class, 'StoreProfesion'       ]);
-    Route::post('/Update/Profesion/{id}',  [App\Http\Controllers\ProfesionController::class, 'UpdateProfesion'      ]);
-  //Rutas carreras controlador "ProfesionController" 
-    Route::get ('/Carreras/Activas',       [App\Http\Controllers\ProfesionController::class, 'CarrerasActivas'      ]);
+    Route::post('/Store/Profesion/{id}',    [App\Http\Controllers\ProfesionController::class, 'StoreProfesion'       ]);
+    Route::post('/Update/Profesion/{id}',   [App\Http\Controllers\ProfesionController::class, 'UpdateProfesion'      ]);
+    Route::get ('/Profesiones/Ultimas/{id}',[App\Http\Controllers\ProfesionController::class, 'ProfesionesUltimas'   ]);
+  //Rutas "carreras" controlador "ProfesionController" 
+    Route::get ('/Carreras/Activas',        [App\Http\Controllers\ProfesionController::class, 'CarrerasActivas'      ]);
+  //Rutas "cursos" controlador "profesionController"
+    Route::get ('/Cursos/Activos',          [App\Http\Controllers\ProfesionController::class, 'CursosActivos'        ]);
     
-    Route::get ('/Profesiones/Inactivas',  [App\Http\Controllers\ProfesionController::class, 'ProfesionesInactivas' ]);
-    Route::get ('/Profesiones/Ultimas',    [App\Http\Controllers\ProfesionController::class, 'ProfesionesUltimas'   ]);
-    Route::get ('/Profesiones/Historicas', [App\Http\Controllers\ProfesionController::class, 'ProfesionesHistoricas']);
-    Route::get ('/Edit/Profesion/{id}',    [App\Http\Controllers\ProfesionController::class, 'EditProfesion'        ]);
-    Route::get ('/Create/Profesion/{id}',  [App\Http\Controllers\ProfesionController::class, 'CreateProfesion'      ]); //El id indica que tipo de profecion(carreta o curso)
-    Route::get ('/Baja/Profesion/{id}',    [App\Http\Controllers\ProfesionController::class, 'BajaProfesion'        ]);
+    Route::get ('/Profesiones/Inactivas',   [App\Http\Controllers\ProfesionController::class, 'ProfesionesInactivas' ]);
+    
+    Route::get ('/Profesiones/Historicas',  [App\Http\Controllers\ProfesionController::class, 'ProfesionesHistoricas']);
+    Route::get ('/Edit/Profesion/{id}',     [App\Http\Controllers\ProfesionController::class, 'EditProfesion'        ]);
+    Route::get ('/Create/Profesion/{id}',   [App\Http\Controllers\ProfesionController::class, 'CreateProfesion'      ]); //El id indica que tipo de profecion(carreta o curso)
+    Route::get ('/Baja/Profesion/{id}',     [App\Http\Controllers\ProfesionController::class, 'BajaProfesion'        ]);
 
 //Rutas "Materia" controlador "MateriaController"    
     Route::post('/Store/Materia/{id}',   [App\Http\Controllers\MateriaController::class, 'StoreMateria'   ]);

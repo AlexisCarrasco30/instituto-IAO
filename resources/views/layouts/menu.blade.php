@@ -100,7 +100,7 @@ transform: scale(1.1)!important ;
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
          
             <li><a class="dropdown-item" href="/Carreras/Activas">Carreras</a></li>
-            <li><a class="dropdown-item" href="#">Cursos</a></li>
+            <li><a class="dropdown-item" href="/Cursos/Activos">Cursos</a></li>
           
           </ul>
         </li>

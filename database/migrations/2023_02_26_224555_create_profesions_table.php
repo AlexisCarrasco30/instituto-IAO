@@ -16,11 +16,10 @@ class CreateProfesionsTable extends Migration
         Schema::create('profesiones', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->float('precioMatricula');
-            $table->string('planEstudio');
-            $table->float('precioTotal');
-            $table->integer('duracion');
-            $table->boolean('materias');
+            $table->float('precioMatricula')->nullabe();
+            $table->string('planEstudio')->nullabe();
+            $table->float('precioTotal')->nullable();
+            $table->string('duracion');
             $table->string('estado');
             $table->string('tipo');
             $table->timestamps();

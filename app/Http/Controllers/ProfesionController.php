@@ -23,6 +23,22 @@ class ProfesionController extends Controller
                  ->with('carreras',$carreras);
    }
 //------------------------------------------------------------------------
+    /**Se trean todas las carreras activas
+    * .
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function CursosActivos()
+    {
+        $cursos = Profesion::where('estado','activo')
+                              ->where('tipo','curso')
+                              ->orderBy('titulo','Asc')
+                              ->get();
+ 
+        return view ('profesion.cursosActivos')
+                  ->with('cursos',$cursos);
+    }
+//------------------------------------------------------------------------
    /**Se trean todas las profesiones antiguas
     * .
     *
@@ -38,19 +54,37 @@ class ProfesionController extends Controller
                  ->with('profesiones',$profesiones);
    }
 //------------------------------------------------------------------------ 
-   /**Se trean todas las profesiones activas ordenadas por ultima actualizada
-    * .
-    *
+   /**
+    * Se trean todas las profesiones activas ordenadas por ultima actualizada.
+    * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function ProfesionesUltimas()
+   public function ProfesionesUltimas($id)
    {
-       $profesiones = Profesion::where('estado','activo')
-                               ->orderBy('updated_at','Desc')
-                               ->get();
+    if($id =='carrera'){
 
-       return view ('profesion.profesion')
-                 ->with('profesiones',$profesiones);
+        $carreras = Profesion::where('estado','activo')
+                              ->where('tipo','carrera')
+                              ->orderBy('titulo','Asc')
+                              ->get();
+
+       return view ('profesion.carrerasActivas')
+                 ->with('carreras',$carreras);
+    }
+
+    if($id == 'curso'){
+
+        $cursos = Profesion::where('estado','activo')
+                            ->where('tipo','curso')
+                            ->orderBy('titulo','Asc')
+                            ->get();
+ 
+        return view ('profesion.cursosActivos')
+                  ->with('cursos',$cursos);
+    }
+       
+
+    return redirect(url()->previous());
    }
 //------------------------------------------------------------------------
    /**Se trean todas las profesiones historicas
@@ -66,48 +100,33 @@ class ProfesionController extends Controller
        return view ('profesion.profesion')
                  ->with('profesiones',$profesiones);
    }
-//------------------------------------------------------------------------  
-
-   /**
-    * Creacion de nueva profesion.
-    *
-    * @return \Illuminate\Http\Response
-    */
-   public function CreateProfesion()
-   {
-       return view('Profesion.create');
-   }
 //------------------------------------------------------------------------ 
    /**
-    * Guardador de la nuena profesion.
-    *
+    * Guardador de la nueva profesion.
+    * @param  int  $id
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-   public function StoreProfesion(Request $request)
+   public function StoreProfesion(Request $request,$id)
    {
    //Control de inputs
        $request->validate([
            'titulo'            => 'required|string',
            'precioMatricula'   => 'required|string',
            'planEstudio'       => 'required|string',
-           'precioTotal'       => 'required|integer|max:100000000|min:1000000',
-           'duracion'          => 'required|integer',
-           'tipo'              => 'required|string',
+           'duracion'          => 'required|string',
        ]);
    //Nueva profesion e incersion de datos
        $profesion                  = new Profesion();
+       $profesion->tipo           = $id;
        $profesion->titulo          = $request->titulo;
        $profesion->precioMatricula = $request->precioMatricula;
        $profesion->planEstudio     = $request->planEstudio;
-       $profesion->precioTotal     = $request->precioTotal;
        $profesion->duracion        = $request->duracion;
-       $profesion->tipo            = $request->tipo;
        $profesion->estado          = 'Activo';
-       $profesion->materias        = $request->materias;
        $profesion->save();
        
-       return redirect('/Profesiones/Ultimas');
+       return redirect('/Profesiones/Ultimas/$id');
    }
 //------------------------------------------------------------------------ 
    /**
