@@ -82,7 +82,7 @@ table th{
                             <td>{{$unCurso->duracion}}</td>
                             <td>        
                                 <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
-                                <a href="#" name="Editar" class="btn editar" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <button type="button" class=" btn btn modalEditar" title="EditarAlumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='{{$unCurso->id}}Modal' value= '{{$unCurso->id}}'><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
@@ -177,6 +177,40 @@ $(document).ready(function() {
 
         })                
     </script>
+    
+<!-- Ordenamiento boton class modaledit e ingreso de datos -->
+  <script>
+        let id = 0;
+        let botonesModal   = document.getElementsByClassName("modalEditar");
+        let botonModal     = [];
+        let cantidad       = botonesModal.length;
+        let cursos         = @json($cursos  );
+        let cantCurso     = cursos.length;
+        
+        for(let i = 0; i < cantidad; i++){
+        
+          id            = botonesModal[i].id;
+          botonModal[i] = document.getElementById(`${id}`);
+
+          botonModal[i].addEventListener('click', function(){
+                for(let x = 0; x < cantCurso ; x++){
+                    
+                    if(cursos[x].id == botonModal[i].value){
+                        
+                       // ingreso los datos del alumno y paso el modal a modo edicion
+                        document.getElementById('formulario').action      = '/Update/curso/'+cursos[x].id;
+                        document.getElementById('tituloModal').innerHTML  = "Editar curso";
+                        document.getElementById('titulo').value           = cursos[x].titulo;
+                        document.getElementById('precioMatricula').value  = cursos[x].precioMatricula;
+                        document.getElementById('planEstudio').value      = cursos[x].planEstudio;
+                        document.getElementById('duracion').value         = cursos[x].duracion;
+                        
+                        x = cantCurso;
+                    }
+                }
+          })
+        }
+  </script>
 
 
 

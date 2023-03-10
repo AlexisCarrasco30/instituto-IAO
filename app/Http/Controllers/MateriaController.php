@@ -14,7 +14,7 @@ class MateriaController extends Controller
      */
     public function Materias($id)
     {
-        $materias = Materia::where('idProfecion',$id)
+        $materias = Materia::where('idProfesion',$id)
                            ->get();
 
         return view ('materia.materias')

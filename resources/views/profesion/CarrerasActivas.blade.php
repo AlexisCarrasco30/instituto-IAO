@@ -82,10 +82,10 @@ table th{
                             <td>{{$unaCarrera->planEstudio}}</td>
                             <td>{{$unaCarrera->duracion}}</td>
                             <td>        
-                                <a href="#" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
-                            <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
-                            <a href="#" name="Editar" class="btn editar" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
+                                <a href="/Materias/{{$unaCarrera->id}}" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
+                                <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
+                                <button type="button" class=" btn btn modalEditar" title="EditarAlumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='{{$unaCarrera->id}}Modal' value= '{{$unaCarrera->id}}'><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -174,6 +174,40 @@ $(document).ready(function() {
 
         })                
     </script>
+
+<!-- Ordenamiento boton class modaledit e ingreso de datos -->
+  <script>
+        let id = 0;
+        let botonesModal   = document.getElementsByClassName("modalEditar");
+        let botonModal     = [];
+        let cantidad       = botonesModal.length;
+        let carreras       = @json($carreras);
+        let cantCarrera    = carreras.length;
+        
+        for(let i = 0; i < cantidad; i++){
+        
+          id            = botonesModal[i].id;
+          botonModal[i] = document.getElementById(`${id}`);
+
+          botonModal[i].addEventListener('click', function(){
+                for(let x = 0; x < cantCarrera; x++){
+                    
+                    if(carreras[x].id == botonModal[i].value){
+                        console.log(carreras[x]);
+                       // ingreso los datos del alumno y paso el modal a modo edicion
+                        document.getElementById('formulario').action      = '/Update/carrera/'+carreras[x].id;
+                        document.getElementById('tituloModal').innerHTML  = "Editar curso";
+                        document.getElementById('titulo').value           = carreras[x].titulo;
+                        document.getElementById('precioMatricula').value  = carreras[x].precioMatricula;
+                        document.getElementById('planEstudio').value      = carreras[x].planEstudio;
+                        document.getElementById('duracion').value         = carreras[x].duracion;
+                        
+                        x = cantCarrera;
+                    }
+                }
+          })
+        }
+  </script>
 
 
 
