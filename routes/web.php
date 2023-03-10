@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/mensajes', function () {
+    return view('mensaje.mensajes');
+});
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -88,6 +90,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Rutas "Pago" controlador "PagoController"
     Route::get ('/Pagos',            [App\Http\Controllers\InscripcionController::class, 'Pagos'          ]);
     Route::post('/Meses/Pendientes', [App\Http\Controllers\InscripcionController::class, 'MesesPendientes']);
+
+
+
 
 
     

@@ -85,7 +85,7 @@ table th{
                                 <a href="/Materias/{{$unaCarrera->id}}" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
                                 <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
                                 <button type="button" class=" btn btn modalEditar" title="EditarAlumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='{{$unaCarrera->id}}Modal' value= '{{$unaCarrera->id}}'><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn eliminar" title="Eliminar" id=" " value= ' '><i class="fa-solid fa-trash-can"></i></button>
+                                <button class="btn btn eliminar" title="Eliminar" id="{{$unaCarrera->id}}" value= '{{$unaCarrera->id}}'><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
                     @endforeach

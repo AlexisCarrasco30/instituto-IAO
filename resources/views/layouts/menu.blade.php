@@ -4,8 +4,12 @@
      <!--Data Table -->
      <link href="https://cdn.datatables.net/v/dt/dt-1.13.3/r-2.4.0/datatables.min.css"/>
      <link href=" https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
-     <link rel="stylesheet" href="{{ asset('estilo.css')}}">
- 
+  <!--data table  -->
+     <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+     <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/2.3.5/css/buttons.dataTables.min.css"/> 
+  <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('estilo.css') }}" />
 
  <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #016C98;">
   <div class="container-fluid">
@@ -74,7 +78,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-message"></i> Mensaje</a>
+          <a class="nav-link active" aria-current="page" href="/mensajes"><i class="fa-solid fa-message"></i> Mensaje</a>
         </li>
       </ul>
   
