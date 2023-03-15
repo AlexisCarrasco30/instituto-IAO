@@ -60,10 +60,10 @@
             <i class="fa-solid fa-landmark"></i> Oferta Academica 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-         
-            <li><a class="dropdown-item" href="/Carreras/Activas">Carreras</a></li>
             <li><a class="dropdown-item" href="/Cursos/Activos">Cursos</a></li>
-          
+            <li><a class="dropdown-item" href="/Secundaria/Activas">Secundarias</a></li>
+            <li><a class="dropdown-item" href="/Universidad/Activas">Universidades</a></li>
+     
           </ul>
         </li>
         <li class="nav-item dropdown">

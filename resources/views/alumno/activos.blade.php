@@ -54,14 +54,14 @@ table th{
             <div class="col-md-6 col-xs-12 text-start">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='agregarAlumno'>
-                <i class="fa-solid fa-user-plus"></i> Agregar Alumno
+                    <i class="fa-solid fa-user-plus"></i> Agregar Alumno
                 </button>
-                </div>
+            </div>
             <div class="col-md-6 col-xs-12 text-end">
                 <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModalCategoria" id ='agregarAlumno'>
                     <i class="fa-solid fa-list"></i> Agregar Categoria
                 </button>
-             </div>
+            </div>
     </div>
 
        <div class="row">
@@ -100,8 +100,6 @@ table th{
             </div>
        </div>
 </div>
-
-
 
 <!-- Modal alumno -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -172,7 +170,7 @@ table th{
           <h5 class="modal-title" id="exampleModalLabel"><strong id= 'tituloModal'><strong> Categoría</strong></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method ="POST" id="formulario" name="formulario">
+        <form action="/Store/ClasificacionAlumno" method ="POST" id="formulario" name="formulario">
         @csrf
           <div class="modal-body cuerpo_modal">
           
@@ -183,10 +181,9 @@ table th{
               <br>
               <div class="input-group input-group-lg">
                   <span class="input-group-text" id="inputGroup-sizing-lg">Corporativo</span>
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
+                  <select class="form-select" name="corporativo" aria-label="Default select example">
+                    <option name="corporativo" value="Si">Si</option>
+                    <option name="corporativo" value="No">No</option>
                     </option>
                   </select>
               </div>

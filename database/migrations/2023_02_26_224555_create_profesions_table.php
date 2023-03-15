@@ -23,6 +23,7 @@ class CreateProfesionsTable extends Migration
             $table->string('estado');
             $table->string('tipo');
             $table->timestamps();
+            $table->foreignId('idUniversidad')->nullable()->constrained('universidades')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -26,7 +26,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //rutas de loguin y usuarios
     Auth::routes();
-
+//Rutas "clasificacion alumno" controlador "ClasificacionAlumno"
+Route::post('/Store/ClasificacionAlumno',[App\Http\Controllers\ClasificacionAlumnoController::class, 'StoreClasificacion'        ]);
 //Rutas "Alumno" controlador "PersonaController"
     Route::post('/Store/Alumno',         [App\Http\Controllers\PersonaController::class, 'StoreAlumno'        ]);
     Route::post('/Update/Alumno/{id}',   [App\Http\Controllers\PersonaController::class, 'UpdateAlumno'       ]);
@@ -56,8 +57,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::post('/Store/Profesion/{id}',    [App\Http\Controllers\ProfesionController::class, 'StoreProfesion'       ]);
     Route::post('/Update/Profesion/{id}',   [App\Http\Controllers\ProfesionController::class, 'UpdateProfesion'      ]);
     Route::get ('/Profesiones/Ultimas/{id}',[App\Http\Controllers\ProfesionController::class, 'ProfesionesUltimas'   ]);
-  //Rutas "carreras" controlador "ProfesionController" 
-    Route::get ('/Carreras/Activas',        [App\Http\Controllers\ProfesionController::class, 'CarrerasActivas'      ]);
+  //Rutas "universidad" controlador "ProfesionController" 
+    Route::get ('/Universidad/Activas',     [App\Http\Controllers\ProfesionController::class, 'UniversidadActivas'   ]);
+    //Rutas "Secundaria" controlador "ProfesionController"
+    Route::get ('/Secundaria/Activas',      [App\Http\Controllers\ProfesionController::class, 'SecundariaActivas'    ]);
   //Rutas "cursos" controlador "profesionController"
     Route::get ('/Cursos/Activos',          [App\Http\Controllers\ProfesionController::class, 'CursosActivos'        ]);
     
@@ -90,6 +93,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Rutas "Pago" controlador "PagoController"
     Route::get ('/Pagos',            [App\Http\Controllers\InscripcionController::class, 'Pagos'          ]);
     Route::post('/Meses/Pendientes', [App\Http\Controllers\InscripcionController::class, 'MesesPendientes']);
+
+//Rutas "universidad" controlador "universidadControler"
+Route::post('/Store/Universidad', [App\Http\Controllers\UniversidadController::class, 'StoreUniversidad']);
+
 
 
 

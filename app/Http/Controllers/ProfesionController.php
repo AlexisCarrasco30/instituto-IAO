@@ -4,24 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Models\Profesion;
 use Illuminate\Http\Request;
-
+use App\Models\Universidad;
+use App\Models\Materia;
+use App\Models\Evaluacion;
+use App\Models\Examen;
+use App\Models\Inscripcion;
+use App\Models\Material;
+use App\Models\Mes;
+use App\Models\Moroso;
+use App\Models\Pago;
+ 
 class ProfesionController extends Controller
 {
+    /**Se trean todas las universidades activas
+    * .
+    *
+    * @return \Illuminate\Http\Response
+    */
+   public function UniversidadActivas()
+   {
+       $universidad = Profesion::where('estado','activo')
+                               ->where('tipo','universidad')
+                               ->orderBy('titulo','Asc')
+                               ->get();
+
+       $clasificacion = Universidad::all();
+
+       return view ('profesion.universidadesActivas')
+                 ->with('universidad',$universidad)
+                 ->with('clasificacion',$clasificacion);
+   }
+//------------------------------------------------------------------------
     /**Se trean todas las carreras activas
     * .
     *
     * @return \Illuminate\Http\Response
     */
-   public function CarrerasActivas()
-   {
-       $carreras = Profesion::where('estado','activo')
-                               ->where('tipo','carrera')
-                               ->orderBy('titulo','Asc')
-                               ->get();
-
-       return view ('profesion.carrerasActivas')
-                 ->with('carreras',$carreras);
-   }
+    public function SecundariaActivas()
+    {
+        $secundaria = Profesion::where('estado','activo')
+                                ->where('tipo','secundaria')
+                                ->orderBy('titulo','Asc')
+                                ->get();
+ 
+        return view ('profesion.secundariasActivas')
+                  ->with('secundaria',$secundaria);
+    }
 //------------------------------------------------------------------------
     /**Se trean todas las carreras activas
     * .
@@ -61,45 +89,45 @@ class ProfesionController extends Controller
     */
    public function ProfesionesUltimas($id)
    {
-    if($id =='carrera'){
+    if($id =='universidad'){
 
-        $carreras = Profesion::where('estado','activo')
-                              ->where('tipo','carrera')
-                              ->orderBy('titulo','Asc')
-                              ->get();
+        $universidad = Profesion::where('estado','activo')
+                                ->where('tipo','universidad')
+                                ->orderBy('updated_at','Desc')
+                                ->get();
 
-       return view ('profesion.carrerasActivas')
-                 ->with('carreras',$carreras);
+       $clasificacion = Universidad::all();
+
+       return view ('profesion.universidadesActivas')
+                 ->with('universidad',$universidad)
+                 ->with('clasificion',$clasificacion);
     }
 
     if($id == 'curso'){
 
         $cursos = Profesion::where('estado','activo')
                             ->where('tipo','curso')
-                            ->orderBy('titulo','Asc')
+                            ->orderBy('updated_at','Desc')
                             ->get();
  
         return view ('profesion.cursosActivos')
                   ->with('cursos',$cursos);
     }
+    if($id == 'secundaria'){
+        $secundaria = Profesion::where('estado','activo')
+                                ->where('tipo','secundaria')
+                                ->orderBy('updated_at','Desc')
+                                ->get();
+ 
+        return view ('profesion.secundariasActivas')
+                  ->with('secundaria',$secundaria);
+
+    }
        
 
     return redirect(url()->previous());
    }
-//------------------------------------------------------------------------
-   /**Se trean todas las profesiones historicas
-    * .
-    *
-    * @return \Illuminate\Http\Response
-    */
-   public function ProfesionesHistoricas()
-   {
-       $profesiones = Profesion::orderBy('titulo','Asc')
-                               ->get();
 
-       return view ('profesion.profesion')
-                 ->with('profesiones',$profesiones);
-   }
 //------------------------------------------------------------------------ 
    /**
     * Guardador de la nueva profesion.
@@ -116,40 +144,18 @@ class ProfesionController extends Controller
            'planEstudio'       => 'required|string',
            'duracion'          => 'required|string',
        ]);
+
    //Nueva profesion e incersion de datos
        $profesion                  = new Profesion();
-       $profesion->tipo           = $id;
+       $profesion->tipo            = $id;
        $profesion->titulo          = $request->titulo;
        $profesion->precioMatricula = $request->precioMatricula;
        $profesion->planEstudio     = $request->planEstudio;
        $profesion->duracion        = $request->duracion;
-       $profesion->estado          = 'Activo';
+       $profesion->estado          = 'activo';
        $profesion->save();
        
        return redirect('/Profesiones/Ultimas/$id');
-   }
-//------------------------------------------------------------------------ 
-   /**
-    * Editar una profesion.
-    * @param  int  $id
-    * @param  \App\Models\Profesion  $profesion
-    * @return \Illuminate\Http\Response
-    */
-   public function EditProfesion(Profesion $profesion, $id)
-   {
-   //control de que sea una profesion activa
-       $profesion = Profesion::where('id',$id)
-                             ->where('estado','activa')
-                             ->get();
-
-       if($profesion->isEmpty()){
-
-           return redirect(url()->previous());
-
-       }
-
-       return view('profesion.edit')
-                 ->with('profesion', $Profesion);
    }
 //------------------------------------------------------------------------ 
    /**
@@ -163,18 +169,16 @@ class ProfesionController extends Controller
    {
    //Control de los inputs
        $request->validate([
-           'titulo'            => 'required|string',
-           'precioMatricula'   => 'required|string',
-           'planEstudio'       => 'required|string',
-           'precioTotal'       => 'required|integer|max:100000000|min:1000000',
-           'duracion'          => 'required|integer',
-           'tipo'              => 'required|string',
+            'titulo'            => 'required|string',
+            'precioMatricula'   => 'required|string',
+            'planEstudio'       => 'required|string',
+            'duracion'          => 'required|string',
        ]);
    //control de que sea una profesion activa
        $profesion = Profesion::where('id',$id)
-                             ->where('estado','activa')
+                             ->where('estado','activo')
                              ->get();
-
+       
        if($profesion->isEmpty()){
 
            return redirect(url()->previous());
@@ -184,16 +188,14 @@ class ProfesionController extends Controller
            $profesion = Profesion::find($id);
        }
    //guardado de los cambios
-       $profesion->titulo          = $request->titulo;
-       $profesion->precioMatricula = $request->precioMatricula;
-       $profesion->planEstudio     = $request->planEstudio;
-       $profesion->precioTotal     = $request->precioTotal;
-       $profesion->duracion        = $request->duracion;
-       $profesion->tipo            = $request->tipo;
-       $profesion->materias        = $request->materias;
-       $profesion->save();
-
-       return redirect('/Profesiones/Ultimas');                    
+        $profesion->titulo          = $request->titulo;
+        $profesion->precioMatricula = $request->precioMatricula;
+        $profesion->planEstudio     = $request->planEstudio;
+        $profesion->duracion        = $request->duracion;
+        $profesion->save();
+        $id = $profesion->tipo;
+        
+       return redirect('/Profesiones/Ultimas/$id');                    
    }
 
    /**
@@ -206,9 +208,9 @@ class ProfesionController extends Controller
    {
    //Control de que exista y se una profesion activa
        $profesion = Profesion::where('id',$id)
-                             ->where('estado','activa')
+                             ->where('estado','activo')
                              ->get();
-
+       
        if($profesion->isEmpty()){
 
            return redirect(url()->previous());
@@ -226,13 +228,13 @@ class ProfesionController extends Controller
        $mes        = Mes        ::where('idProfesion',$id)->get();
        $moroso     = Moroso     ::where('idProfesion',$id)->get();
        $pago       = Pago       ::where('idProfesion',$id)->get();
-
+       
        if($materia->isEmpty() && $evaluacion->isEmpty() && $examen->isEmpty()){
 
            if($incripcion->isEmpty() && $material->isEmpty() && $mes->isEmpty()){
 
                if($moroso->isEmpty() && $pago->isEmpty()){
-
+                    
                    $profesion->delete();
                    return redirect(url()->previous());
                }

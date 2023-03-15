@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClasificacionAlumno;
+use App\Models\Universidad;
 use Illuminate\Http\Request;
 
-class ClasificacionAlumnoController extends Controller
+class UniversidadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,30 +33,35 @@ class ClasificacionAlumnoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function StoreClasificacion(Request $request)
-    { 
-        $clasificacion = new ClasificacionAlumno();
-        $clasificacion->descripcion = $request->nombreCategoria;
-        $clasificacion->porcentajeDesc = 0;
-        if($request->corporativo =='si'){
-            $clasificacion->corporativo = true;
-        }
-        else{
-            $clasificacion->corporativo = false; 
-        }
+    public function StoreUniversidad(Request $request)
+    {
+    //Control de inputs
+        $request->validate([
+            'nombre'            => 'required|string',
+        ]);
+
+        $universidad = Universidad::where('descripcion',$request->nombre)
+                                 ->get();
         
-        $clasificacion->save();
-        return redirect('/Alumnos/Activos');
-        
+        if($universidad->isEmpty()){
+            
+            $universidad              = new Universidad();
+            $universidad->descripcion = $request->nombre;
+            $universidad->save();
+            return redirect('/Universidad/Activas');
+                         
+        }else{
+            return redirect(url()->previous());  
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ClasificacionAlumno  $clasificacionAlumno
+     * @param  \App\Models\Universidad  $universidad
      * @return \Illuminate\Http\Response
      */
-    public function show(ClasificacionAlumno $clasificacionAlumno)
+    public function show(Universidad $universidad)
     {
         //
     }
@@ -64,10 +69,10 @@ class ClasificacionAlumnoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ClasificacionAlumno  $clasificacionAlumno
+     * @param  \App\Models\Universidad  $universidad
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClasificacionAlumno $clasificacionAlumno)
+    public function edit(Universidad $universidad)
     {
         //
     }
@@ -76,10 +81,10 @@ class ClasificacionAlumnoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ClasificacionAlumno  $clasificacionAlumno
+     * @param  \App\Models\Universidad  $universidad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClasificacionAlumno $clasificacionAlumno)
+    public function update(Request $request, Universidad $universidad)
     {
         //
     }
@@ -87,10 +92,10 @@ class ClasificacionAlumnoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ClasificacionAlumno  $clasificacionAlumno
+     * @param  \App\Models\Universidad  $universidad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClasificacionAlumno $clasificacionAlumno)
+    public function destroy(Universidad $universidad)
     {
         //
     }

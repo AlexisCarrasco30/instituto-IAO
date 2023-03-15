@@ -48,7 +48,7 @@ table th{
 
 <div class="container">
     <div class="text-center p-4">
-        <h1>Carreras</h1>
+        <h1>Secundarias</h1>
     </div>
     <div class="row">
     </div>
@@ -56,7 +56,7 @@ table th{
         <div class="col-12">
             <!-- Button trigger modal -->
         <button type="button" id= "agregarCarrera" class="btn btn-primary" title="Agregar Carrera" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-            <i class="fa-solid fa-graduation-cap"></i> Agregar Carrera  
+            <i class="fa-solid fa-graduation-cap"></i> Agregar Secundaria  
         </button>
         </div>
         <div class="col-12 p-3"></div>
@@ -75,17 +75,17 @@ table th{
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($carreras as $unaCarrera)
+                    @foreach($secundaria as $unaSecundaria)
                         <tr>
-                            <td>{{$unaCarrera->titulo}}</td>
-                            <td>{{$unaCarrera->precioMatricula}}</td>
-                            <td>{{$unaCarrera->planEstudio}}</td>
-                            <td>{{$unaCarrera->duracion}}</td>
+                            <td>{{$unaSecundaria->titulo}}</td>
+                            <td>{{$unaSecundaria->precioMatricula}}</td>
+                            <td>{{$unaSecundaria->planEstudio}}</td>
+                            <td>{{$unaSecundaria->duracion}}</td>
                             <td>        
-                                <a href="/Materias/{{$unaCarrera->id}}" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
+                                <a href="/Materias/{{$unaSecundaria->id}}" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
                                 <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
-                                <button type="button" class=" btn btn modalEditar" title="EditarAlumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='{{$unaCarrera->id}}Modal' value= '{{$unaCarrera->id}}'><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn eliminar" title="Eliminar" id="{{$unaCarrera->id}}" value= '{{$unaCarrera->id}}'><i class="fa-solid fa-trash-can"></i></button>
+                                <button type="button" class=" btn btn modalEditar" title="EditarAlumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='{{$unaSecundaria->id}}Modal' value= '{{$unaSecundaria->id}}'><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn eliminar" title="Eliminar" id="{{$unaSecundaria->id}}" value= '{{$unaSecundaria->id}}'><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -161,7 +161,7 @@ $(document).ready(function() {
         let agregarCarrera = document.getElementById('agregarCarrera');
         agregarCarrera.addEventListener('click', function(){
                 
-            document.getElementById('tituloModal').innerHTML ="Agregar Carrera";
+            document.getElementById('tituloModal').innerHTML ="Agregar Secundaria";
 
            // limpieza
             document.getElementById('titulo').value           ='';
@@ -170,7 +170,7 @@ $(document).ready(function() {
             document.getElementById('duracion').value         ='';
 
             let formulario    = document.getElementById('formulario');
-            formulario.action = '/Store/Profesion/carrera';
+            formulario.action = '/Store/Profesion/secundaria';
 
         })                
     </script>
@@ -181,8 +181,8 @@ $(document).ready(function() {
         let botonesModal   = document.getElementsByClassName("modalEditar");
         let botonModal     = [];
         let cantidad       = botonesModal.length;
-        let carreras       = @json($carreras);
-        let cantCarrera    = carreras.length;
+        let secundarias    = @json($secundaria);
+        let cantSecundaria = secundarias.length;
         
         for(let i = 0; i < cantidad; i++){
         
@@ -190,24 +190,69 @@ $(document).ready(function() {
           botonModal[i] = document.getElementById(`${id}`);
 
           botonModal[i].addEventListener('click', function(){
-                for(let x = 0; x < cantCarrera; x++){
+                for(let x = 0; x < cantSecundaria; x++){
                     
-                    if(carreras[x].id == botonModal[i].value){
-                        console.log(carreras[x]);
-                       // ingreso los datos del alumno y paso el modal a modo edicion
-                        document.getElementById('formulario').action      = '/Update/carrera/'+carreras[x].id;
-                        document.getElementById('tituloModal').innerHTML  = "Editar curso";
-                        document.getElementById('titulo').value           = carreras[x].titulo;
-                        document.getElementById('precioMatricula').value  = carreras[x].precioMatricula;
-                        document.getElementById('planEstudio').value      = carreras[x].planEstudio;
-                        document.getElementById('duracion').value         = carreras[x].duracion;
+                    if(secundarias[x].id == botonModal[i].value){
                         
-                        x = cantCarrera;
+                       // ingreso los datos del alumno y paso el modal a modo edicion
+                        document.getElementById('formulario').action      = '/Update/Profesion/'+secundarias[x].id;
+                        document.getElementById('tituloModal').innerHTML  = "Editar Secundaria";
+                        document.getElementById('titulo').value           = secundarias[x].titulo;
+                        document.getElementById('precioMatricula').value  = secundarias[x].precioMatricula;
+                        document.getElementById('planEstudio').value      = secundarias[x].planEstudio;
+                        document.getElementById('duracion').value         = secundarias[x].duracion;
+                        
+                        x = cantSecundaria;
                     }
                 }
           })
         }
   </script>
+  
+<!-- ordemanimiento de boton delete -->
+<script>
+        var idEliminar  = 0;
+        var botones = document.getElementsByClassName("eliminar");
+        var boton   = [];
+        let cantidadEliminar = botones.length;
+            for(let i = 0; i < cantidadEliminar; i++){
+                  idEliminar = botones[i].id;
+                  boton[i]= document.getElementById(`${idEliminar}`);
+                
+                  boton[i].addEventListener('click', function(){
+                    
+                        let cod            = boton[i].value;
+                        let secundaria     = @json($secundaria);
+                        let cantSecundaria = secundaria.length;
+                        let nombre ='';
+
+                        for(let x = 0; x < cantSecundaria; x++){
+                            if(secundaria[x].id == boton[i].value){
+                                nombre = secundaria[x].titulo;
+                                x = cantSecundaria;
+                            }
+                        }
+                        Swal.fire({
+                            title: 'Esta Seguro que desea borrar la secundaria '+nombre+'?',
+                            text: "Recuerde que en caso de que la secundaria esten inscriptos alumnos o este relacionada con pagos se hara una baja logica. Confirme la decisión!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, eliminar'
+
+                         }).then((result) => {
+                     if (result.isConfirmed) {
+
+                        location.href ='/Baja/Profesion/'+cod
+
+                          }
+                        })
+
+                     });
+                    }
+  </script>
+
 
 
 
