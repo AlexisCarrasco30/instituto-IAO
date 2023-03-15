@@ -136,14 +136,25 @@ class ProfesionController extends Controller
     * @return \Illuminate\Http\Response
     */
    public function StoreProfesion(Request $request,$id)
-   {
+   { 
    //Control de inputs
-       $request->validate([
-           'titulo'            => 'required|string',
-           'precioMatricula'   => 'required|string',
-           'planEstudio'       => 'required|string',
-           'duracion'          => 'required|string',
-       ]);
+       
+       if($request->universidad){
+            $request->validate([
+                'titulo'            => 'required|string',
+                'precioMatricula'   => 'required|string',
+                'planEstudio'       => 'required|string',
+                'duracion'          => 'required|string',
+                'universidad'       => 'required|integer',
+            ]);
+       }else{
+            $request->validate([
+                'titulo'            => 'required|string',
+                'precioMatricula'   => 'required|string',
+                'planEstudio'       => 'required|string',
+                'duracion'          => 'required|string',
+            ]);
+       }
 
    //Nueva profesion e incersion de datos
        $profesion                  = new Profesion();
@@ -153,6 +164,10 @@ class ProfesionController extends Controller
        $profesion->planEstudio     = $request->planEstudio;
        $profesion->duracion        = $request->duracion;
        $profesion->estado          = 'activo';
+
+       if($request->universidad){
+        $profesion->idUniversidad = $request->universidad;
+       }
        $profesion->save();
        
        return redirect('/Profesiones/Ultimas/$id');
@@ -167,13 +182,24 @@ class ProfesionController extends Controller
     */
    public function UpdateProfesion(Request $request, $id)
    {
-   //Control de los inputs
-       $request->validate([
-            'titulo'            => 'required|string',
-            'precioMatricula'   => 'required|string',
-            'planEstudio'       => 'required|string',
-            'duracion'          => 'required|string',
-       ]);
+    //Control de inputs
+       
+       if($request->universidad){
+            $request->validate([
+                'titulo'            => 'required|string',
+                'precioMatricula'   => 'required|string',
+                'planEstudio'       => 'required|string',
+                'duracion'          => 'required|string',
+                'universidad'       => 'required|integer',
+            ]);
+       }else{
+            $request->validate([
+                'titulo'            => 'required|string',
+                'precioMatricula'   => 'required|string',
+                'planEstudio'       => 'required|string',
+                'duracion'          => 'required|string',
+            ]);
+       }
    //control de que sea una profesion activa
        $profesion = Profesion::where('id',$id)
                              ->where('estado','activo')
@@ -192,6 +218,9 @@ class ProfesionController extends Controller
         $profesion->precioMatricula = $request->precioMatricula;
         $profesion->planEstudio     = $request->planEstudio;
         $profesion->duracion        = $request->duracion;
+        if($request->universidad){
+            $profesion->idUniversidad = $request->universidad;
+        }
         $profesion->save();
         $id = $profesion->tipo;
         

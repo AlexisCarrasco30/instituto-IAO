@@ -56,7 +56,7 @@ table th{
     <div class="row botones">
         <div class="col-md-6 col-xs-12 text-start">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='agregarAlumno'>
+            <button type="button" class="btn btn-primary" title="Agregar Alumno" data-bs-toggle="modal" data-bs-target="#exampleModal" id ='agregarCarrera'>
                 <i class="fa-solid fa-user-plus"></i> Agregar Carrera
             </button>
         </div>
@@ -77,6 +77,7 @@ table th{
                             <th>PRECIO-MATRICULA</th>
                             <th>PLAN DE ESTUDIO</th>
                             <th>DURACIÓN</th>
+                            <th>UNIVERSIDAD</th>
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
@@ -87,6 +88,7 @@ table th{
                             <td>{{$unaCarrera->precioMatricula}}</td>
                             <td>{{$unaCarrera->planEstudio}}</td>
                             <td>{{$unaCarrera->duracion}}</td>
+                            <td>{{$unaCarrera->Universidad->descripcion}}</td>
                             <td>        
                                 <a href="/Materias/{{$unaCarrera->id}}" name="verMaterias" class="btn verMaterias" title="ver Materias"><i class="fa-solid fa-book"></i></a>
                                 <a href="#" name="verAlumnos" class="btn verAlumnos" title="verAlumnos"><i class="fa-solid fa-eye"></i></a>
@@ -134,7 +136,7 @@ table th{
             <br>
             <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg">Universidad</span>
-                    <select  id='clasificacion' class="form-control" name="clasificacion">
+                    <select  id='universidad' class="form-control" name="universidad">
                     @foreach($clasificacion as $unaClasificacion)
                         <option  id ="{{$unaClasificacion->id}}" value = "{{$unaClasificacion->id}}" class="seleccion">{{$unaClasificacion->descripcion}}</option>
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
@@ -190,11 +192,17 @@ $(document).ready(function() {
         }
     } );
 } );
+</script>
 
-</script>
-</script>
-    let agregarUniversidad = document.getElementById('');
-<script>
+<!-- limpieza de modal agregar universidad -->
+    <script>
+        let agregarUniversidad = document.getElementById('agregarUniversidad');
+
+        agregarUniversidad.addEventListener('click', function(){
+            document.getElementById('nombreUniversidad').value='';
+        })
+    </script>
+
 <!-- limpieza  y poner modal en modo creacion-->
     <script>
         let agregarCarrera = document.getElementById('agregarCarrera');

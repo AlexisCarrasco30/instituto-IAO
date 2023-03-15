@@ -18,4 +18,12 @@ class Profesion extends Model
     {   
         return $this->hasmany(Materia::class);
     }
+    /**
+    * relacion una profesion con una universidad
+    */
+    public function Universidad()
+    {   
+        return $this->belongsTo(Universidad::class,'idUniversidad','id');
+        
+    }
 }
