@@ -81,14 +81,15 @@ Route::post('/Store/ClasificacionAlumno',[App\Http\Controllers\ClasificacionAlum
     Route::get ('/Baja/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'BajaMateria'    ]);
 
 //Rutas "Inscripcion" controlador "InscripcionController"
-    Route::post('/Store/Inscripcion',              [App\Http\Controllers\InscripcionController::class, 'StoreInscripcion'           ]);
-    Route::post('/UpdateInscripcion/{id}',         [App\Http\Controllers\InscripcionController::class, 'UpdateInscripcion'          ]);
-    Route::post('/Buscar/Profesion/Incriptas/DNI', [App\Http\Controllers\InscripcionController::class, 'BuscarProfesionIncriptasDni']);
-    Route::get ('/Inscripciones',                  [App\Http\Controllers\InscripcionController::class, 'Incripciones'               ]);
-    Route::get ('/Incripciones/Ultimas',           [App\Http\Controllers\InscripcionController::class, 'IncripcionesUltimas'        ]);
-    Route::get ('/Create/Inscripcion',             [App\Http\Controllers\InscripcionController::class, 'CreateInscripcion'          ]);
-    Route::get ('/Edit/Inscripcion/{id}',          [App\Http\Controllers\InscripcionController::class, 'EditInscripcion'            ]);
-    Route::get ('/Baja/Incripcion/{id}',           [App\Http\Controllers\InscripcionController::class, 'BajaIncripcion'             ]);
+    Route::post('/Store/Inscripcion',              [App\Http\Controllers\InscripcionController::class, 'StoreInscripcion'             ]);
+    Route::post('/UpdateInscripcion/{id}',         [App\Http\Controllers\InscripcionController::class, 'UpdateInscripcion'            ]);
+    Route::post('/Buscar/Profesion/Incriptas/DNI', [App\Http\Controllers\InscripcionController::class, 'BuscarProfesionIncriptasDni'  ]);
+    Route::get ('/Inscripciones',                  [App\Http\Controllers\InscripcionController::class, 'Incripciones'                 ]);
+    Route::get ('/Incripciones/Ultimas',           [App\Http\Controllers\InscripcionController::class, 'IncripcionesUltimas'          ]);
+    Route::get ('/Create/Inscripcion',             [App\Http\Controllers\InscripcionController::class, 'CreateInscripcion'            ]);
+    Route::get ('/Edit/Inscripcion/{id}',          [App\Http\Controllers\InscripcionController::class, 'EditInscripcion'              ]);
+    Route::get ('/Baja/Incripcion/{id}',           [App\Http\Controllers\InscripcionController::class, 'BajaIncripcion'               ]);
+    Route::get ('/Alumnos/inscriptos/{id}',        [App\Http\Controllers\InscripcionController::class, 'AlumnosInscriptosPorProfesion']);
     
 //Rutas "Pago" controlador "PagoController"
     Route::get ('/Pagos',            [App\Http\Controllers\InscripcionController::class, 'Pagos'          ]);

@@ -248,7 +248,16 @@ $(document).ready(function() {
                         document.getElementById('precioMatricula').value  = carreras[x].precioMatricula;
                         document.getElementById('planEstudio').value      = carreras[x].planEstudio;
                         document.getElementById('duracion').value         = carreras[x].duracion;
-                        
+
+                        let seleccion    = document.getElementsByClassName('seleccion') 
+                        let cantOpciones = seleccion.length;
+
+                        for(let j = 0; j < cantOpciones; j++){
+                            if(seleccion[j].value == carreras[x].idUniversidad ){
+                                seleccion[j].selected = true;
+                                j = cantOpciones;
+                            }
+                        }
                         x = cantCarrera;
                     }
                 }

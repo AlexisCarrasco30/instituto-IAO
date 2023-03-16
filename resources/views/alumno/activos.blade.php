@@ -297,9 +297,6 @@ $(document).ready(function() {
 
                         for(let j = 0; j < cantOpciones; j++){
                             if(seleccion[j].value == alumnos[x].idClasificacion ){
-
-                                console.log(seleccion[j].value);
-                                console.log(alumnos[x].idClasificacion);
                                 seleccion[j].selected = true;
                                 j = cantOpciones;
                             }
