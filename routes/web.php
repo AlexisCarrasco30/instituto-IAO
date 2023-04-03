@@ -71,14 +71,16 @@ Route::post('/Store/ClasificacionAlumno',[App\Http\Controllers\ClasificacionAlum
     Route::get ('/Create/Profesion/{id}',   [App\Http\Controllers\ProfesionController::class, 'CreateProfesion'      ]); //El id indica que tipo de profecion(carreta o curso)
     Route::get ('/Baja/Profesion/{id}',     [App\Http\Controllers\ProfesionController::class, 'BajaProfesion'        ]);
 
-//Rutas "Materia" controlador "MateriaController"    
-    Route::post('/Store/Materia/{id}',   [App\Http\Controllers\MateriaController::class, 'StoreMateria'   ]);
-    Route::post('/Update/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'UpdateMateria'  ]);
-    Route::get ('/Materias/{id}',        [App\Http\Controllers\MateriaController::class, 'Materias'       ]);
-    Route::get ('/Materias/Ultimas{id}', [App\Http\Controllers\MateriaController::class, 'MateriasUltimas']);
-    Route::get ('/Edit/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'EditMateria'    ]);
-    Route::get ('/Create/Materia/{id}',  [App\Http\Controllers\MateriaController::class, 'CreateMateria'  ]);
-    Route::get ('/Baja/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'BajaMateria'    ]);
+
+   //Rutas "Materia" controlador "MateriaController"    
+   Route::post('/Store/Materia/{id}',      [App\Http\Controllers\MateriaController::class, 'StoreMateria'   ]);
+   Route::post('/Update/Materia/{id}',     [App\Http\Controllers\MateriaController::class, 'UpdateMateria'  ]);
+   Route::get ('/Materias/{id}',           [App\Http\Controllers\MateriaController::class, 'Materias'       ]);
+   Route::get ('/Materias/Inactivas/{id}', [App\Http\Controllers\MateriaController::class, 'MateriasInactivas']);
+   Route::get ('/Edit/Materia/{id}',       [App\Http\Controllers\MateriaController::class, 'EditMateria'    ]);
+   Route::get ('/Create/Materia/{id}',     [App\Http\Controllers\MateriaController::class, 'CreateMateria'  ]);
+   Route::get ('/Baja/Materia/{id}',       [App\Http\Controllers\MateriaController::class, 'BajaMateria'    ]);
+   Route::get ('/Activar/Materia/{id}',    [App\Http\Controllers\MateriaController::class, 'ActivarMateria' ]);
 
 //Rutas "Inscripcion" controlador "InscripcionController"
     Route::post('/Store/Inscripcion',              [App\Http\Controllers\InscripcionController::class, 'StoreInscripcion'             ]);
