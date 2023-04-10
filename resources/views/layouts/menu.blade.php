@@ -80,8 +80,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/mensajes"><i class="fa-solid fa-message"></i> Mensaje</a>
         </li>
+      @if(auth()->user())
+        <li class="nav-item dropdown ">      
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Usuario"> <i class="fa-solid fa-user"></i> Usuario: {{auth()->user()->tipo}}</a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href='#' class="dropdown-item " onclick ="event.preventDefault();
+                document.getElementById('logout-form').submit();"><i class="fa-solid fa-right-to-bracket"></i> Cerrar</a>
+            </li>
+          </ul>
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+        </form>
+      @endif
       </ul>
-  
     </div>
   </div>
 </nav>
